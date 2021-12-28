@@ -1,0 +1,33 @@
+#PaginaInicial{
+    -fx-background-image: url("../Images/FundoInicial.png");
+    -fx-background-repeat: stretch;
+    -fx-background-size: 1000 650;
+    -fx-background-position: center center;
+    -fx-effect: dropshadow(three-pass-box, black, 30, 0.5, 0, 0);
+    -fx-font-weight: bold;
+}
+
+
+#labelTitulo{
+-fx-font: 72 arial;
+-fx-font-weight:bold;
+}
+
+
+#btnEstudante{
+-fx-background-color: #886B4E;
+-fx-pref-height: 28px;
+-fx-pref-width: 150px;
+}
+
+#btnSenhorio{
+-fx-background-color: #BBAA2A;
+-fx-pref-height: 28px;
+-fx-pref-width: 150px;
+}
+
+#btnCamara{
+-fx-background-color: #7ABC29;
+-fx-pref-height: 28px;
+-fx-pref-width: 150px;
+}
