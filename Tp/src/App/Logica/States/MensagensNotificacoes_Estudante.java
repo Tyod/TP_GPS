@@ -9,6 +9,16 @@ public class MensagensNotificacoes_Estudante extends AppStateAdapter{
         super(dados);
     }
 
+    public IAppState geraVistaListaQuartosPublicados(){ return new ListaQuartosPublicados(dados); }
+
+    public IAppState geraVistaEscolheVista(){
+        return new EscolheVista(dados);
+    }
+
+    public IAppState geraVistaFavoritos() {
+        return new ListaFavoritos(dados);
+    }
+
     @Override
     public AppSituation getSituacaoAtual() {
         return AppSituation.Mensagens_Notificacoes_Estudante;

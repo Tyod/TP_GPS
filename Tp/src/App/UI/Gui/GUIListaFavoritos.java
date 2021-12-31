@@ -2,28 +2,191 @@ package App.UI.Gui;
 
 import App.Logica.AppObs;
 import App.Logica.AppSituation;
+import App.Logica.Data.DisponibilidadeQuarto;
+import App.Logica.Data.Quarto;
 import App.Logica.PropsID;
+import App.UI.Resources.CSSManager;
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+
+import java.util.ArrayList;
 
 public class GUIListaFavoritos extends BorderPane {
     AppObs appObs;
+
+    //Items Cabeçalho
+    Label lbNomeApp;
+    Button btnPesquisarQuartos;
+    Button btnListaFavoritos;
+    Button btnMensagensNotificacoes;
+    Button btnSair;
+    HBox cabecalho;
+
+    //Items Subcabeçalho
+    Label lbTitulo;
+    Button btnPT;
+    Button btnENG;
+    HBox subCabecalho;
+
+    //Items de finalização de pagina
+    Line linha;
+    Label lbMsgFimDePagina;
+    HBox contentorLinha;
+
+    //Painel Principal
+    VBox painel;
 
     public GUIListaFavoritos(AppObs g){
         appObs = g;
         criarComponentes();
         disporVista();
         registarLiscteners();
+        CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
                 (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Lista_Favoritos);});
     }
 
     private void criarComponentes() {
+        lbNomeApp = new Label("Room4You");
+        lbTitulo = new Label("Lista de Favoritos");
+        btnPesquisarQuartos = new Button("Pesquisar Quartos");
+        btnListaFavoritos = new Button("Lista de Favoritos");
+        btnMensagensNotificacoes = new Button("Mensagens");
+        btnPT = new Button("PT");
+        btnENG = new Button("ENG");
+        btnSair = new Button("Sair");
+        painel = new VBox();
+        cabecalho = new HBox();
+        subCabecalho = new HBox();
+
+        linha = new Line();
+        lbMsgFimDePagina = new Label("Não há mais favoritos a mostrar...");
+        contentorLinha = new HBox();
+
+        lbTitulo.setId("labelSubTitulo");
+        lbNomeApp.setId("labelNomeApp");
+        cabecalho.setId("cabecalhoEstudante");
     }
 
     private void disporVista() {
+        btnPT.setStyle("-fx-background-color: #FF0000;");
+        btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+        ScrollPane listaAnuncios = new ScrollPane();
+        listaAnuncios.setPannable(true);
+        listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        listaAnuncios.setMaxHeight(650);
+
+        //Header
+        GridPane header = new GridPane();
+        header.add(btnPesquisarQuartos, 2,0);
+        header.add(btnListaFavoritos, 3, 0);
+        header.add(btnMensagensNotificacoes, 4,0);
+        header.add(btnSair, 8,0);
+        header.setHgap(5);
+        lbNomeApp.setPadding(new Insets(0, 515, 0 ,3));
+        cabecalho.getChildren().addAll(lbNomeApp, header);
+        cabecalho.setPadding(new Insets(15, 0,15,0));
+        header.setAlignment(Pos.TOP_CENTER);
+
+        //SubHeader
+        lbTitulo.setPadding(new Insets(0,645, 0,3));
+        GridPane subheader = new GridPane();
+        subheader.add(btnPT, 0,0);
+        subheader.add(btnENG, 1,0);
+        subheader.setPadding(new Insets(2,0,0,0));
+        subCabecalho.setPadding(new Insets(10, 0,20,0));
+        subCabecalho.getChildren().addAll(lbTitulo, subheader);
+
+        painel.getChildren().addAll(cabecalho,subCabecalho);
+
+
+        //Anuncios
+        ArrayList<Quarto> listTemp = new ArrayList<>();
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        for (int i=0; i<listTemp.size(); i++) {
+            GridPane anuncio = new GridPane();
+            anuncio.setMaxWidth(950);
+            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
+            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
+            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
+            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
+            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
+            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
+            anuncio.setVgap(8);
+            anuncio.setPadding(new Insets(0,250,0,20));
+            Button btnMsg = new Button("✉");
+            btnMsg.setOnAction((e)->{
+                appObs.geraVistaMensagensEstudante();
+            });
+            btnMsg.setPadding(new Insets(7.5,7.5,7.5,7.5));
+            VBox painelBtn = new VBox();
+            painelBtn.getChildren().addAll(btnMsg);
+            HBox realAnuncio = new HBox();
+            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
+            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
+            realAnuncio.setMaxWidth(600);
+            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
+            painel.getChildren().add(realAnuncio);
+        }
+
+        //Items de finalização de pagina
+        linha.setStartX(50);
+        linha.setEndX(950);
+        linha.setStrokeWidth(6);
+        contentorLinha.getChildren().add(linha);
+        contentorLinha.setAlignment(Pos.CENTER);
+        painel.getChildren().add(contentorLinha);
+        lbMsgFimDePagina.setAlignment(Pos.CENTER);
+        lbMsgFimDePagina.setStyle("-fx-font-weight:bold;");
+        lbMsgFimDePagina.setPadding(new Insets(0,5,20,5));
+        painel.getChildren().add(lbMsgFimDePagina);
+
+
+        //ColocaPainelPrincipal
+        painel.setSpacing(20);
+        painel.setAlignment(Pos.CENTER);
+        listaAnuncios.setContent(painel);
+        setTop(listaAnuncios);
     }
 
     private void registarLiscteners() {
+        btnSair.setOnAction((e)->{
+            appObs.geraVistaEscolheVista();
+        });
+
+        btnMensagensNotificacoes.setOnAction((e)->{
+            appObs.geraVistaMensagensEstudante();
+        });
+
+        btnPesquisarQuartos.setOnAction((e)->{
+            appObs.geraVistaListaQuartosPublicados();
+        });
+
+        btnPT.setOnAction((e)->{
+            btnPT.setStyle("-fx-background-color: #FF0000;");
+            btnENG.setStyle("-fx-background-color: #FFFFFF;");
+        });
+
+        btnENG.setOnAction((e)->{
+            btnENG.setStyle("-fx-background-color: #0004F5");
+            btnPT.setStyle("-fx-background-color: #FFFFFF;");
+        });
     }
 }

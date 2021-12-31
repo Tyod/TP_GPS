@@ -2,13 +2,12 @@ package App.Logica.Data;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.List;
 
 public class AppData implements Serializable {
-    private  List<Quarto> listaQuartoPublicados;
-    private  List<Quarto> listaQuartosPendentes;
-    private  List<Quarto> listaQuartosPessoal;
-    private  List<Quarto> listaFavoritos;
+    private  ArrayList<Quarto> listaQuartoPublicados;
+    private  ArrayList<Quarto> listaQuartosPendentes;
+    private  ArrayList<Quarto> listaQuartosPessoal;
+    private  ArrayList<Quarto> listaFavoritos;
 
     public AppData(){
         listaQuartoPublicados = new ArrayList<>();
@@ -20,27 +19,33 @@ public class AppData implements Serializable {
         carregaListaPendentes("ListaQuartosPendentes.txt");
         carregaListaPessoal("ListaQuartosPessoal.txt");
         carregaListaFavoritos("ListaFavoritos.txt");
+
+        listaQuartoPublicados.clear();
+        listaQuartoPublicados.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
     }
 
+    public ArrayList<Quarto> getListaQuartoPublicados() {
+        return listaQuartoPublicados;
+    }
 
     //ADICIONA ELEMENTOS ÀS LISTAS
-    public void adicionaQuartoPublicado(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto){
-        listaQuartoPublicados.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto));
+    public void adicionaQuartoPublicado(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+        listaQuartoPublicados.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem));
         guardaListaPublicados("ListaQuartosPublicados.txt");
     }
 
-    public void adicionaQuartoPendentes(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto){
-        listaQuartosPendentes.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto));
+    public void adicionaQuartoPendentes(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+        listaQuartosPendentes.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem));
         guardaListaPendentes("ListaQuartosPendentes.txt");
     }
 
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto){
-        listaQuartosPessoal.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto));
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+        listaQuartosPessoal.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem));
         guardaListaPessoal("ListaQuartosPessoal.txt");
     }
 
-    public void adicionaQuartoFavorito(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto){
-        listaFavoritos.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto));
+    public void adicionaQuartoFavorito(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+        listaFavoritos.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem));
         guardaListaFavoritos("ListaFavoritos.txt");
     }
 
@@ -100,7 +105,7 @@ public class AppData implements Serializable {
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            listaQuartoPublicados = (List<Quarto>) objectIn.readObject();
+            listaQuartoPublicados = (ArrayList<Quarto>) objectIn.readObject();
             objectIn.close();
 
             return true;
@@ -114,7 +119,7 @@ public class AppData implements Serializable {
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            listaQuartosPendentes = (List<Quarto>) objectIn.readObject();
+            listaQuartosPendentes = (ArrayList<Quarto>) objectIn.readObject();
             objectIn.close();
 
             return true;
@@ -128,7 +133,7 @@ public class AppData implements Serializable {
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            listaQuartosPessoal = (List<Quarto>) objectIn.readObject();
+            listaQuartosPessoal = (ArrayList<Quarto>) objectIn.readObject();
             objectIn.close();
 
             return true;
@@ -142,7 +147,7 @@ public class AppData implements Serializable {
         try {
             FileInputStream fileIn = new FileInputStream(fileName);
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-            listaFavoritos = (List<Quarto>) objectIn.readObject();
+            listaFavoritos = (ArrayList<Quarto>) objectIn.readObject();
             objectIn.close();
 
             return true;

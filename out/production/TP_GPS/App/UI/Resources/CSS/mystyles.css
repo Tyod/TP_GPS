@@ -31,3 +31,30 @@
 -fx-pref-height: 28px;
 -fx-pref-width: 150px;
 }
+
+#labelNomeApp{
+-fx-font: 20 arial;
+-fx-font-weight:bold;
+}
+
+#cabecalhoEstudante{
+-fx-background-color: #886B4E;
+}
+
+#cabecalhoSenhorio{
+-fx-background-color: #BBAA2A;
+}
+
+#cabecalhoCamara{
+-fx-background-color: #7ABC29;
+}
+
+#btnsEstudante{
+-fx-background-color: #886B4E;
+-fx-font-weight:bold;
+}
+
+#labelSubTitulo{
+-fx-font: 32 arial;
+-fx-font-weight:bold;
+}

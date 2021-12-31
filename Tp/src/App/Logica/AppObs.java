@@ -1,9 +1,11 @@
 package App.Logica;
 
+import App.Logica.Data.Quarto;
 import App.Logica.States.IAppState;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.util.ArrayList;
 import java.util.List;
 
 public class AppObs {
@@ -34,5 +36,33 @@ public class AppObs {
 
     public void geraVistaListaQuartosPessoal() {
         disparaEventos(app.geraVistaListaQuartosPessoal());
+    }
+
+    public ArrayList<Quarto> getListaQuartosPublicados() {
+        return app.getListaQuartosPublicados();
+    }
+
+    public void geraVistaEscolheVista() {
+        disparaEventos(app.geraVistaEscolheVista());
+    }
+
+    public void geraVistaFavoritos() {
+        disparaEventos(app.geraVistaFavoritos());
+    }
+
+    public void geraVistaMensagensEstudante() {
+        disparaEventos(app.geraVistaMensagensEstudante());
+    }
+
+    public void geraVistaMensagensSenhorio() {
+        disparaEventos(app.geraVistaMensagensSenhorio());
+    }
+
+    public void geraVistaEditarAnuncio() {
+        disparaEventos(app.geraVistaEditarAnuncio());
+    }
+
+    public void geraVistaCriarAnuncio() {
+        disparaEventos(app.geraVistaCriarAnuncio());
     }
 }

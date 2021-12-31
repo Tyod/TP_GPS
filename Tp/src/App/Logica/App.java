@@ -1,6 +1,7 @@
 package App.Logica;
 
 import App.Logica.Data.AppData;
+import App.Logica.Data.Quarto;
 import App.Logica.States.EscolheVista;
 import App.Logica.States.IAppState;
 
@@ -52,5 +53,45 @@ public class App {
         eventos.clear();
         defineEstado(estado.geraVistaListaQuartosPessoal());
         return eventos;
+    }
+
+    public List<PropsID> geraVistaEscolheVista() {
+        eventos.clear();
+        defineEstado(estado.geraVistaEscolheVista());
+        return eventos;
+    }
+
+    public List<PropsID> geraVistaFavoritos() {
+        eventos.clear();
+        defineEstado(estado.geraVistaFavoritos());
+        return eventos;
+    }
+
+    public List<PropsID> geraVistaMensagensEstudante() {
+        eventos.clear();
+        defineEstado(estado.geraVistaMensagensEstudante());
+        return eventos;
+    }
+
+    public List<PropsID> geraVistaMensagensSenhorio() {
+        eventos.clear();
+        defineEstado(estado.geraVistaMensagensSenhorio());
+        return eventos;
+    }
+
+    public List<PropsID> geraVistaEditarAnuncio() {
+        eventos.clear();
+        defineEstado(estado.geraVistaEditarAnuncio());
+        return eventos;
+    }
+
+    public List<PropsID> geraVistaCriarAnuncio() {
+        eventos.clear();
+        defineEstado(estado.geraVistaCriarAnuncio());
+        return eventos;
+    }
+
+    public ArrayList<Quarto> getListaQuartosPublicados() {
+        return estado.getListaQuartosPublicados();
     }
 }

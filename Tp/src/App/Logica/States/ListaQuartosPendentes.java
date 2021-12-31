@@ -9,6 +9,10 @@ public class ListaQuartosPendentes extends AppStateAdapter{
         super(dados);
     }
 
+    public IAppState geraVistaEscolheVista(){
+        return new EscolheVista(dados);
+    }
+
     @Override
     public AppSituation getSituacaoAtual() {
         return AppSituation.Lista_Quartos_Pendentes;

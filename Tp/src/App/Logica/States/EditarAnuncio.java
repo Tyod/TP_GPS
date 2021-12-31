@@ -9,6 +9,14 @@ public class EditarAnuncio  extends AppStateAdapter{
         super(dados);
     }
 
+    public IAppState geraVistaListaQuartosPessoal(){ return new ListaQuartosPessoal(dados); }
+
+    public IAppState geraVistaMensagensSenhorio(){ return new MensagensNotificacoes_Senhorio(dados); }
+
+    public IAppState geraVistaEscolheVista(){
+        return new EscolheVista(dados);
+    }
+
     @Override
     public AppSituation getSituacaoAtual() {
         return AppSituation.Editar_anuncio;

@@ -1,6 +1,11 @@
 package App.Logica.Data;
 
-public class Quarto {
+import javafx.scene.Node;
+import javafx.scene.image.Image;
+
+import java.io.Serializable;
+
+public class Quarto implements Serializable {
 
     private static int Contador = 0;
     private int id;
@@ -10,8 +15,9 @@ public class Quarto {
     private String servicos;
     private Boolean despesas;
     private long contacto;
+    private String imagem;
 
-    public Quarto(DisponibilidadeQuarto disponiblidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto) {
+    public Quarto(DisponibilidadeQuarto disponiblidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem) {
         this.id = Quarto.Contador;
         this.disponiblidade = disponiblidade;
         this.preco = preco;
@@ -19,6 +25,7 @@ public class Quarto {
         this.servicos = servicos;
         this.despesas = despesas;
         this.contacto = contacto;
+        this.imagem = imagem;
 
         Quarto.Contador++;
     }
@@ -50,7 +57,7 @@ public class Quarto {
         this.contacto = contacto;
     }
 
-
+    public void setImagem(String imagem) { this.imagem = imagem; }
 
     //GETTERS
     public DisponibilidadeQuarto getDisponiblidade() {
@@ -78,6 +85,8 @@ public class Quarto {
     public long getContacto() {
         return contacto;
     }
+
+    public String getImagem() { return imagem; }
 
 
     @Override

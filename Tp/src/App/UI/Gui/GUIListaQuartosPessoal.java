@@ -2,17 +2,46 @@ package App.UI.Gui;
 
 import App.Logica.AppObs;
 import App.Logica.AppSituation;
+import App.Logica.Data.DisponibilidadeQuarto;
+import App.Logica.Data.Quarto;
 import App.Logica.PropsID;
 import App.UI.Resources.CSSManager;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Line;
+
+import java.util.ArrayList;
 
 public class GUIListaQuartosPessoal extends BorderPane {
     AppObs appObs;
 
+    //Items Cabeçalho
+    Label lbNomeApp;
+    Button btnPesquisarQuartos;
+    Button btnMensagensNotificacoes;
+    Button btnSair;
+    HBox cabecalho;
+
+    //Items Subcabeçalho
     Label lbTitulo;
+    Button btnPT;
+    Button btnENG;
+    HBox subCabecalho;
+
+    //Items Adicionar
+    Line linha;
+    Button btnCriarAnuncio;
+    HBox painelAdcionarAnuncio;
+
+    //Painel Principal
     VBox painel;
 
     public GUIListaQuartosPessoal(AppObs g){
@@ -27,17 +56,137 @@ public class GUIListaQuartosPessoal extends BorderPane {
     }
 
     private void criarComponentes() {
-        lbTitulo = new Label("Senhorio");
+        lbNomeApp = new Label("Room4You");
+        lbTitulo = new Label("Lista de Quartos Publicados");
+        btnPesquisarQuartos = new Button("Consultar Quartos");
+        btnMensagensNotificacoes = new Button("Mensagens");
+        btnPT = new Button("PT");
+        btnENG = new Button("ENG");
+        btnSair = new Button("Sair");
         painel = new VBox();
-        lbTitulo.setId("labelTitulo");
+        cabecalho = new HBox();
+        subCabecalho = new HBox();
+
+        linha = new Line();
+        btnCriarAnuncio = new Button("➕");
+        painelAdcionarAnuncio = new HBox();
+
+        lbTitulo.setId("labelSubTitulo");
+        lbNomeApp.setId("labelNomeApp");
+        cabecalho.setId("cabecalhoSenhorio");
     }
 
     private void disporVista() {
+
+
+        btnPT.setStyle("-fx-background-color: #FF0000;");
+        btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+        ScrollPane listaAnuncios = new ScrollPane();
+        listaAnuncios.setPannable(true);
+        listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        listaAnuncios.setMaxHeight(650);
+
+        //Header
+        GridPane header = new GridPane();
+        header.add(btnPesquisarQuartos, 2,0);
+        header.add(btnMensagensNotificacoes, 3,0);
+        header.add(btnSair, 8,0);
+        header.setHgap(5);
+        lbNomeApp.setPadding(new Insets(0, 620, 0 ,3));
+        cabecalho.getChildren().addAll(lbNomeApp, header);
+        cabecalho.setPadding(new Insets(15, 0,15,0));
+        header.setAlignment(Pos.TOP_CENTER);
+
+        //SubHeader
+        lbTitulo.setPadding(new Insets(0,490, 0,3));
+        GridPane subheader = new GridPane();
+        subheader.add(btnPT, 0,0);
+        subheader.add(btnENG, 1,0);
+        subheader.setPadding(new Insets(2,0,0,0));
+        subCabecalho.setPadding(new Insets(10, 0,20,0));
+        subCabecalho.getChildren().addAll(lbTitulo, subheader);
+
+        painel.getChildren().addAll(cabecalho,subCabecalho);
+
+        //Anuncios
+        ArrayList<Quarto> listTemp = new ArrayList<>();
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        for (int i=0; i<listTemp.size(); i++) {
+            GridPane anuncio = new GridPane();
+            anuncio.setMaxWidth(950);
+            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
+            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
+            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
+            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
+            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
+            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
+            anuncio.setVgap(8);
+            anuncio.setPadding(new Insets(0,250,0,20));
+            Button btnEditar = new Button("✏");
+            btnEditar.setPadding(new Insets(4.8,9.5,4.8,9.5));
+            btnEditar.setOnAction((e)->{
+               appObs.geraVistaEditarAnuncio();
+            });
+            Button btnApagar = new Button("\uD83D\uDDD1");
+            btnApagar.setPadding(new Insets(4.8,11,4.8,11));
+            btnApagar.setOnAction((e)->{
+
+            });
+            VBox painelBtn = new VBox();
+            painelBtn.getChildren().addAll(btnEditar, btnApagar);
+            HBox realAnuncio = new HBox();
+            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
+            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
+            realAnuncio.setMaxWidth(800);
+            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
+            painel.getChildren().add(realAnuncio);
+        }
+
+        //Items Adicionar
+        linha.setStartX(50);
+        linha.setEndX(950);
+        linha.setStrokeWidth(6);
+        painelAdcionarAnuncio.getChildren().addAll(linha, btnCriarAnuncio);
+        painelAdcionarAnuncio.setAlignment(Pos.CENTER);
+        painelAdcionarAnuncio.setSpacing(10);
+        painelAdcionarAnuncio.setPadding(new Insets(10,10,20,10));
+        painel.getChildren().add(painelAdcionarAnuncio);
+
+        //ColocaPainelPrincipal
+        painel.setSpacing(20);
         painel.setAlignment(Pos.CENTER);
-        painel.getChildren().addAll(lbTitulo);
-        setCenter(painel);
+        listaAnuncios.setContent(painel);
+        setTop(listaAnuncios);
     }
 
     private void registarLiscteners() {
+        btnPT.setOnAction((e)->{
+            btnPT.setStyle("-fx-background-color: #FF0000;");
+            btnENG.setStyle("-fx-background-color: #FFFFFF;");
+        });
+
+        btnENG.setOnAction((e)->{
+            btnENG.setStyle("-fx-background-color: #0004F5");
+            btnPT.setStyle("-fx-background-color: #FFFFFF;");
+        });
+
+        btnSair.setOnAction((e)->{
+            appObs.geraVistaEscolheVista();
+        });
+
+        btnMensagensNotificacoes.setOnAction((e)->{
+            appObs.geraVistaMensagensSenhorio();
+        });
+
+        btnCriarAnuncio.setOnAction((e)->{
+            appObs.geraVistaCriarAnuncio();
+        });
     }
 }

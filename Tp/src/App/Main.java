@@ -19,7 +19,7 @@ public class Main  extends Application {
         AppObs appObs = new AppObs();
         GUIApp GUI = new GUIApp(appObs);
         stage.setTitle("Room4You");
-        stage.setScene(new Scene(GUI.obtemRootPane(), 1000, 650));
+        stage.setScene(new Scene(GUI.obtemRootPane(), 1012, 650));
         stage.setResizable(false);
         stage.show();
     }
