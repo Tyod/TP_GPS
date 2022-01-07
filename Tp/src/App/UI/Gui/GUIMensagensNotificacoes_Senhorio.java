@@ -31,6 +31,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
     Button btnMensagensNotificacoes;
     Button btnSair;
     HBox cabecalho;
+    ScrollPane listaAnuncios;
 
     //Items Subcabeçalho
     Label lbTitulo;
@@ -55,7 +56,50 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.MensagensNotificacoes_Senhorio);});
+                (e) -> {
+                    this.setVisible(appObs.getSituacao() == AppSituation.MensagensNotificacoes_Senhorio);
+
+                    if(appObs.getSituacao() == AppSituation.MensagensNotificacoes_Senhorio){
+                        painel.getChildren().clear();
+                        zonaMsg.getChildren().clear();
+                        repoemVista();
+                    }
+                });
+    }
+
+    private void repoemVista() {
+
+        //Zona de Mensagens
+        for(Mensagem temp : appObs.getListaMensagens()){
+            System.out.println(temp.getMensagem());
+            ImageView imageView;
+            Label estudante = new Label();
+            estudante.setStyle("-fx-font: 16 arial;");
+            Label senhorio = new Label();
+            estudante.setStyle("-fx-font: 16 arial;");
+
+            if(temp.getAutor() == TipoUtilzadores.Estudante)
+                imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarEstudante.jpg");
+            else
+                imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
+
+            imageView.setFitWidth(30);
+            imageView.setFitHeight(30);
+
+            if(temp.getAutor() == TipoUtilzadores.Estudante){
+                estudante.setText(temp.getMensagem());
+                zonaMsg.add(imageView, 0, ContadorLinha);
+                zonaMsg.add(estudante, 1, ContadorLinha);
+                ContadorLinha++;
+            }else{
+                senhorio.setText(temp.getMensagem());
+                zonaMsg.add(imageView, 2,ContadorLinha);
+                zonaMsg.add(senhorio,1,ContadorLinha);
+                ContadorLinha++;
+            }
+        }
+
+        painel.getChildren().addAll(cabecalho,subCabecalho,zonaMsg,painelDeMensagens);
     }
 
     private void criarComponentes() {
@@ -69,6 +113,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         painel = new VBox();
         cabecalho = new HBox();
         subCabecalho = new HBox();
+        listaAnuncios = new ScrollPane();
 
         zonaMsg = new GridPane();
         painelDeMensagens = new HBox();
@@ -87,7 +132,6 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         btnPT.setStyle("-fx-background-color: #FF0000;");
         btnENG.setStyle("-fx-background-color: #FFFFFF;");
 
-        ScrollPane listaAnuncios = new ScrollPane();
         listaAnuncios.setPannable(true);
         listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -113,41 +157,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         subCabecalho.setPadding(new Insets(10, 0,20,0));
         subCabecalho.getChildren().addAll(lbTitulo, subheader);
 
-
-        //Zona de Mensagens
-        ArrayList<Mensagem> tempArray = new ArrayList<>();
-        tempArray.add(new Mensagem(TipoUtilzadores.Estudante, "yoooooooo"));
-        tempArray.add(new Mensagem(TipoUtilzadores.Senhorio, "aaaaaaaaaaaaaa"));
-        tempArray.add(new Mensagem(TipoUtilzadores.Senhorio, "bbbbbbbbb"));
-        tempArray.add(new Mensagem(TipoUtilzadores.Estudante, "mmmmmmmm"));
         zonaMsg.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
-        for(Mensagem temp : tempArray){
-            ImageView imageView;
-            Label estudante = new Label();
-            estudante.setStyle("-fx-font: 16 arial;");
-            Label senhorio = new Label();
-            estudante.setStyle("-fx-font: 16 arial;");
-
-            if(temp.getAutor() == TipoUtilzadores.Estudante)
-                imageView = new ImageView("C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarEstudante.jpg");
-            else
-                imageView = new ImageView("C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
-
-            imageView.setFitWidth(30);
-            imageView.setFitHeight(30);
-
-            if(temp.getAutor() == TipoUtilzadores.Estudante){
-                estudante.setText(temp.getMensagem());
-                zonaMsg.add(imageView, 0, ContadorLinha);
-                zonaMsg.add(estudante, 1, ContadorLinha);
-                ContadorLinha++;
-            }else{
-                senhorio.setText(temp.getMensagem());
-                zonaMsg.add(imageView, 2,ContadorLinha);
-                zonaMsg.add(senhorio,1,ContadorLinha);
-                ContadorLinha++;
-            }
-        }
         zonaMsg.setAlignment(Pos.CENTER);
         zonaMsg.setVgap(5);
         zonaMsg.setMaxWidth(900);
@@ -159,7 +169,6 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         painelDeMensagens.setAlignment(Pos.CENTER);
         painel.setPadding(new Insets(0,0,20,0));
 
-        painel.getChildren().addAll(cabecalho,subCabecalho,zonaMsg,painelDeMensagens);
 
         //ColocaPainelPrincipal
         painel.setSpacing(20);
@@ -189,12 +198,14 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
 
         btnEnviaMsg.setOnAction((e)->{
             ImageView imageView2;
-            imageView2 = new ImageView("C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
+            imageView2 = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
             imageView2.setFitWidth(30);
             imageView2.setFitHeight(30);
             Label mensagem = new Label(tfInputMensagem.getText());
+            mensagem.setStyle("-fx-font: 12 arial;");
             zonaMsg.add(imageView2, 2, ContadorLinha);
             zonaMsg.add(mensagem, 1, ContadorLinha);
+            appObs.adicionaMensagem(TipoUtilzadores.Senhorio, tfInputMensagem.getText());
             ContadorLinha++;
         });
     }

@@ -66,7 +66,9 @@ public class GUICriarAnuncio extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Criar_Anuncio);});
+                (e) -> {
+                    this.setVisible(appObs.getSituacao() == AppSituation.Criar_Anuncio);
+                });
     }
 
     private void criarComponentes() {
@@ -81,7 +83,7 @@ public class GUICriarAnuncio extends BorderPane {
         cabecalho = new HBox();
         subCabecalho = new HBox();
 
-        imageView = new ImageView("C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+        imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
         lbImagem = new Label("Imagem:");
         btnNovaImagem = new Button("Selecionar Imagem");
         lbDetalhes = new Label("Detalhes:");
@@ -225,6 +227,27 @@ public class GUICriarAnuncio extends BorderPane {
         });
 
         btnCriar.setOnAction((e)->{
+            if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
+            if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+
             appObs.geraVistaListaQuartosPessoal();
         });
 

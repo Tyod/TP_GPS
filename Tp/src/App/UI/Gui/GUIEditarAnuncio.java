@@ -80,7 +80,7 @@ public class GUIEditarAnuncio extends BorderPane {
         cabecalho = new HBox();
         subCabecalho = new HBox();
 
-        imageView = new ImageView("C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+        imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
         lbImagem = new Label("Imagem:");
         btnNovaImagem = new Button("Alerar Imagem");
         lbDetalhes = new Label("Detalhes:");

@@ -29,6 +29,7 @@ public class GUIListaQuartosPessoal extends BorderPane {
     Button btnMensagensNotificacoes;
     Button btnSair;
     HBox cabecalho;
+    ScrollPane listaAnuncios;
 
     //Items Subcabeçalho
     Label lbTitulo;
@@ -52,7 +53,70 @@ public class GUIListaQuartosPessoal extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Lista_Quartos_Pessoal);});
+                (e) -> {
+                    this.setVisible(appObs.getSituacao() == AppSituation.Lista_Quartos_Pessoal);
+
+                    if(appObs.getSituacao() == AppSituation.Lista_Quartos_Pessoal){
+                        painel.getChildren().clear();
+                        repoemVista();
+                    }
+                });
+    }
+
+    private void repoemVista() {
+        painel.getChildren().addAll(cabecalho,subCabecalho);
+        //Anuncios
+        ArrayList<Quarto> listTemp = appObs.getListaQuartosPessoal();
+        for (int i=0; i<listTemp.size(); i++) {
+            GridPane anuncio = new GridPane();
+            anuncio.setMaxWidth(950);
+            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
+            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
+            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
+            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
+            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
+            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
+            anuncio.add(new Label("Aprovação: " + listTemp.get(i).getAprovacao()), 1,6);
+            anuncio.add(new Label("Publicado: " + listTemp.get(i).getPublicado()), 1,7);
+            anuncio.setVgap(8);
+            anuncio.setPadding(new Insets(0,250,0,20));
+            Button btnEditar = new Button("✏");
+            btnEditar.setPadding(new Insets(4.8,9.5,4.8,9.5));
+            btnEditar.setOnAction((e)->{
+                appObs.geraVistaEditarAnuncio();
+            });
+            Button btnApagar = new Button("\uD83D\uDDD1");
+            btnApagar.setPadding(new Insets(4.8,11,4.8,11));
+            Button btnPublicar = new Button("\uD83D\uDCE4");
+            btnPublicar.setPadding(new Insets(4.8,11,4.8,11));
+            VBox painelBtn = new VBox();
+            painelBtn.getChildren().addAll(btnEditar, btnApagar,btnPublicar);
+            HBox realAnuncio = new HBox();
+            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
+            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
+            realAnuncio.setMaxWidth(800);
+            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
+            painel.getChildren().add(realAnuncio);
+            int finalI = i;
+            btnApagar.setOnAction((e)->{
+                painel.getChildren().remove(realAnuncio);
+                appObs.removeQuartoPessoal(listTemp.get(finalI).getId(), listTemp.get(finalI).getPublicado());
+            });
+            btnPublicar.setOnAction((e)->{
+                if(listTemp.get(finalI).getAprovacao() && !listTemp.get(finalI).getPublicado())
+                    appObs.adcionaQuartoPublico(listTemp.get(finalI).getId());
+                listTemp.get(finalI).setPublicado(true);
+            });
+        }
+
+
+        painel.getChildren().add(painelAdcionarAnuncio);
+
+        listaAnuncios.setContent(painel);
+        setTop(listaAnuncios);
     }
 
     private void criarComponentes() {
@@ -66,6 +130,7 @@ public class GUIListaQuartosPessoal extends BorderPane {
         painel = new VBox();
         cabecalho = new HBox();
         subCabecalho = new HBox();
+        listaAnuncios = new ScrollPane();
 
         linha = new Line();
         btnCriarAnuncio = new Button("➕");
@@ -82,7 +147,7 @@ public class GUIListaQuartosPessoal extends BorderPane {
         btnPT.setStyle("-fx-background-color: #FF0000;");
         btnENG.setStyle("-fx-background-color: #FFFFFF;");
 
-        ScrollPane listaAnuncios = new ScrollPane();
+
         listaAnuncios.setPannable(true);
         listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -110,44 +175,7 @@ public class GUIListaQuartosPessoal extends BorderPane {
 
         painel.getChildren().addAll(cabecalho,subCabecalho);
 
-        //Anuncios
-        ArrayList<Quarto> listTemp = new ArrayList<>();
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        for (int i=0; i<listTemp.size(); i++) {
-            GridPane anuncio = new GridPane();
-            anuncio.setMaxWidth(950);
-            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
-            imageView.setFitHeight(150);
-            imageView.setFitWidth(150);
-            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
-            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
-            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
-            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
-            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
-            anuncio.setVgap(8);
-            anuncio.setPadding(new Insets(0,250,0,20));
-            Button btnEditar = new Button("✏");
-            btnEditar.setPadding(new Insets(4.8,9.5,4.8,9.5));
-            btnEditar.setOnAction((e)->{
-               appObs.geraVistaEditarAnuncio();
-            });
-            Button btnApagar = new Button("\uD83D\uDDD1");
-            btnApagar.setPadding(new Insets(4.8,11,4.8,11));
-            btnApagar.setOnAction((e)->{
 
-            });
-            VBox painelBtn = new VBox();
-            painelBtn.getChildren().addAll(btnEditar, btnApagar);
-            HBox realAnuncio = new HBox();
-            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
-            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
-            realAnuncio.setMaxWidth(800);
-            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
-            painel.getChildren().add(realAnuncio);
-        }
 
         //Items Adicionar
         linha.setStartX(50);

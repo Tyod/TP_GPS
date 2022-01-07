@@ -1,7 +1,6 @@
 package App.Logica;
 
-import App.Logica.Data.AppData;
-import App.Logica.Data.Quarto;
+import App.Logica.Data.*;
 import App.Logica.States.EscolheVista;
 import App.Logica.States.IAppState;
 
@@ -91,7 +90,31 @@ public class App {
         return eventos;
     }
 
+
+    //GET Lists
     public ArrayList<Quarto> getListaQuartosPublicados() {
         return estado.getListaQuartosPublicados();
+    }
+    public ArrayList<Quarto> getListaQuartosPessoal() { return estado.getListaQuartosPessoal(); }
+    public ArrayList<Quarto> getListaQuartosFavoritos() { return estado.getListaQuartosFavoritos(); }
+    public ArrayList<Quarto> getListaQuartosPendentes() { return estado.getListaQuartosPendentes();}
+    public ArrayList<Mensagem> getListaMensagens() { return estado.getListaMensagens(); }
+
+    //Adicona Mensagens
+    public void adicionaMensagem(TipoUtilzadores estudante, String text) { estado.adicionaMensagem(estudante, text); }
+
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem) {
+        estado.adicionaQuartoPessoal(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem);
+    }
+    public void removeQuartoPessoal(int id, Boolean flag) {
+        estado.removeQuartoPessoal(id, flag);
+    }
+
+    public void removeQuartoPendente(int id) {
+        estado.removeQuartoPendente(id);
+    }
+
+    public void adcionaQuartoPublico(int id) {
+        estado.adcionaQuartoPublico(id);
     }
 }

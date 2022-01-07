@@ -31,12 +31,16 @@ public class GUIListaQuartosPublicados extends BorderPane {
     Button btnMensagensNotificacoes;
     Button btnSair;
     HBox cabecalho;
+    GridPane header;
+    GridPane filtros;
+    ScrollPane listaAnuncios;
 
     //Items Subcabeçalho
     Label lbTitulo;
     Button btnPT;
     Button btnENG;
     HBox subCabecalho;
+    GridPane subheader;
 
     //Items Filtros
     Label lbTituloFiltro;
@@ -70,7 +74,61 @@ public class GUIListaQuartosPublicados extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Lista_Quartos_Publicados);});
+                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Lista_Quartos_Publicados);
+
+                    if(appObs.getSituacao() == AppSituation.Lista_Quartos_Publicados) {
+                        painel.getChildren().clear();
+                        repoemVista();
+                    }
+
+                });
+    }
+
+    private void repoemVista() {
+        painel.getChildren().addAll(cabecalho,subCabecalho,filtros);
+
+        //Anuncios
+        ArrayList<Quarto> listTemp = appObs.getListaQuartosPublicados();
+        for (int i=0; i<listTemp.size(); i++) {
+            GridPane anuncio = new GridPane();
+            anuncio.setMaxWidth(950);
+            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
+            imageView.setFitHeight(150);
+            imageView.setFitWidth(150);
+            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
+            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
+            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
+            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
+            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
+            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
+            anuncio.setVgap(8);
+            anuncio.setPadding(new Insets(0,250,0,20));
+            Button btnFav = new Button("⭐");
+            btnFav.setOnAction((e)->{
+                appObs.geraVistaFavoritos();
+            });
+            Button btnMsg = new Button("✉");
+            btnMsg.setOnAction((e)->{
+                appObs.geraVistaMensagensEstudante();
+            });
+            btnFav.setPadding(new Insets(7.5,7.8,7.5,7.8));
+            btnMsg.setPadding(new Insets(7.5,7.5,7.5,7.5));
+            VBox painelBtn = new VBox();
+            painelBtn.getChildren().addAll(btnFav, btnMsg);
+            HBox realAnuncio = new HBox();
+            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
+            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
+            realAnuncio.setMaxWidth(800);
+            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
+            painel.getChildren().add(realAnuncio);
+        }
+
+        painel.getChildren().addAll(contentorLinha, lbMsgFimDePagina);
+
+        painel.setSpacing(20);
+        painel.setAlignment(Pos.CENTER);
+        listaAnuncios.setContent(painel);
+        setTop(listaAnuncios);
     }
 
     private void criarComponentes() {
@@ -85,6 +143,10 @@ public class GUIListaQuartosPublicados extends BorderPane {
         painel = new VBox();
         cabecalho = new HBox();
         subCabecalho = new HBox();
+        header = new GridPane();
+        subheader = new GridPane();
+        filtros = new GridPane();
+        listaAnuncios = new ScrollPane();
 
         //Cena dos filtros
         lbTituloFiltro = new Label("Filtros de pesquisa:");
@@ -120,14 +182,13 @@ public class GUIListaQuartosPublicados extends BorderPane {
         btnPT.setStyle("-fx-background-color: #FF0000;");
         btnENG.setStyle("-fx-background-color: #FFFFFF;");
 
-        ScrollPane listaAnuncios = new ScrollPane();
+
         listaAnuncios.setPannable(true);
         listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
         listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         listaAnuncios.setMaxHeight(650);
 
         //Header
-        GridPane header = new GridPane();
         header.add(btnPesquisarQuartos, 2,0);
         header.add(btnListaFavoritos, 3, 0);
         header.add(btnMensagensNotificacoes, 4,0);
@@ -140,7 +201,6 @@ public class GUIListaQuartosPublicados extends BorderPane {
 
         //SubHeader
         lbTitulo.setPadding(new Insets(0,490, 0,3));
-        GridPane subheader = new GridPane();
         subheader.add(btnPT, 0,0);
         subheader.add(btnENG, 1,0);
         subheader.setPadding(new Insets(2,0,0,0));
@@ -148,7 +208,6 @@ public class GUIListaQuartosPublicados extends BorderPane {
         subCabecalho.getChildren().addAll(lbTitulo, subheader);
 
         //Filtros
-        GridPane filtros = new GridPane();
         filtros.setMaxWidth(850);
         lbTituloFiltro.setStyle("-fx-font-weight:bold; -fx-font: 14 arial;");
         lbTituloFiltro.setPadding(new Insets(0,0,25,0));
@@ -183,45 +242,6 @@ public class GUIListaQuartosPublicados extends BorderPane {
         filtros.setVgap(5);
 
         painel.getChildren().addAll(cabecalho,subCabecalho,filtros);
-
-        //Anuncios
-        ArrayList<Quarto> listTemp = new ArrayList<>();
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        for (int i=0; i<listTemp.size(); i++) {
-            GridPane anuncio = new GridPane();
-            anuncio.setMaxWidth(950);
-            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
-            imageView.setFitHeight(150);
-            imageView.setFitWidth(150);
-            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
-            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
-            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
-            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
-            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
-            anuncio.setVgap(8);
-            anuncio.setPadding(new Insets(0,250,0,20));
-            Button btnFav = new Button("⭐");
-            btnFav.setOnAction((e)->{
-                appObs.geraVistaFavoritos();
-            });
-            Button btnMsg = new Button("✉");
-            btnMsg.setOnAction((e)->{
-                appObs.geraVistaMensagensEstudante();
-            });
-            btnFav.setPadding(new Insets(7.5,7.8,7.5,7.8));
-            btnMsg.setPadding(new Insets(7.5,7.5,7.5,7.5));
-            VBox painelBtn = new VBox();
-            painelBtn.getChildren().addAll(btnFav, btnMsg);
-            HBox realAnuncio = new HBox();
-            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
-            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
-            realAnuncio.setMaxWidth(800);
-            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
-            painel.getChildren().add(realAnuncio);
-        }
 
         //Items de finalização de pagina
         linha.setStartX(50);

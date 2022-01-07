@@ -30,6 +30,7 @@ public class GUIListaFavoritos extends BorderPane {
     Button btnMensagensNotificacoes;
     Button btnSair;
     HBox cabecalho;
+    ScrollPane listaAnuncios;
 
     //Items Subcabeçalho
     Label lbTitulo;
@@ -53,70 +54,21 @@ public class GUIListaFavoritos extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Lista_Favoritos);});
+                (e) -> {
+                    this.setVisible(appObs.getSituacao() == AppSituation.Lista_Favoritos);
+
+                    if(appObs.getSituacao() == AppSituation.Lista_Favoritos){
+                        painel.getChildren().clear();
+                        repoemVista();
+                    }
+                });
     }
 
-    private void criarComponentes() {
-        lbNomeApp = new Label("Room4You");
-        lbTitulo = new Label("Lista de Favoritos");
-        btnPesquisarQuartos = new Button("Pesquisar Quartos");
-        btnListaFavoritos = new Button("Lista de Favoritos");
-        btnMensagensNotificacoes = new Button("Mensagens");
-        btnPT = new Button("PT");
-        btnENG = new Button("ENG");
-        btnSair = new Button("Sair");
-        painel = new VBox();
-        cabecalho = new HBox();
-        subCabecalho = new HBox();
-
-        linha = new Line();
-        lbMsgFimDePagina = new Label("Não há mais favoritos a mostrar...");
-        contentorLinha = new HBox();
-
-        lbTitulo.setId("labelSubTitulo");
-        lbNomeApp.setId("labelNomeApp");
-        cabecalho.setId("cabecalhoEstudante");
-    }
-
-    private void disporVista() {
-        btnPT.setStyle("-fx-background-color: #FF0000;");
-        btnENG.setStyle("-fx-background-color: #FFFFFF;");
-
-        ScrollPane listaAnuncios = new ScrollPane();
-        listaAnuncios.setPannable(true);
-        listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
-        listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
-        listaAnuncios.setMaxHeight(650);
-
-        //Header
-        GridPane header = new GridPane();
-        header.add(btnPesquisarQuartos, 2,0);
-        header.add(btnListaFavoritos, 3, 0);
-        header.add(btnMensagensNotificacoes, 4,0);
-        header.add(btnSair, 8,0);
-        header.setHgap(5);
-        lbNomeApp.setPadding(new Insets(0, 515, 0 ,3));
-        cabecalho.getChildren().addAll(lbNomeApp, header);
-        cabecalho.setPadding(new Insets(15, 0,15,0));
-        header.setAlignment(Pos.TOP_CENTER);
-
-        //SubHeader
-        lbTitulo.setPadding(new Insets(0,645, 0,3));
-        GridPane subheader = new GridPane();
-        subheader.add(btnPT, 0,0);
-        subheader.add(btnENG, 1,0);
-        subheader.setPadding(new Insets(2,0,0,0));
-        subCabecalho.setPadding(new Insets(10, 0,20,0));
-        subCabecalho.getChildren().addAll(lbTitulo, subheader);
-
+    private void repoemVista() {
         painel.getChildren().addAll(cabecalho,subCabecalho);
 
-
         //Anuncios
-        ArrayList<Quarto> listTemp = new ArrayList<>();
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
-        listTemp.add(new Quarto(DisponibilidadeQuarto.disponivel, 10, "Oliveira", "Mesa", true, 10, "C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\FundoInicial.png"));
+        ArrayList<Quarto> listTemp = appObs.getListaQuartosFavoritos();
         for (int i=0; i<listTemp.size(); i++) {
             GridPane anuncio = new GridPane();
             anuncio.setMaxWidth(950);
@@ -145,6 +97,71 @@ public class GUIListaFavoritos extends BorderPane {
             realAnuncio.setPadding(new Insets(20, 20, 20, 20));
             painel.getChildren().add(realAnuncio);
         }
+
+        painel.getChildren().add(contentorLinha);
+        painel.getChildren().add(lbMsgFimDePagina);
+
+        painel.setSpacing(20);
+        painel.setAlignment(Pos.CENTER);
+        listaAnuncios.setContent(painel);
+        setTop(listaAnuncios);
+    }
+
+    private void criarComponentes() {
+        lbNomeApp = new Label("Room4You");
+        lbTitulo = new Label("Lista de Favoritos");
+        btnPesquisarQuartos = new Button("Pesquisar Quartos");
+        btnListaFavoritos = new Button("Lista de Favoritos");
+        btnMensagensNotificacoes = new Button("Mensagens");
+        btnPT = new Button("PT");
+        btnENG = new Button("ENG");
+        btnSair = new Button("Sair");
+        painel = new VBox();
+        cabecalho = new HBox();
+        subCabecalho = new HBox();
+        listaAnuncios = new ScrollPane();
+
+        linha = new Line();
+        lbMsgFimDePagina = new Label("Não há mais favoritos a mostrar...");
+        contentorLinha = new HBox();
+
+        lbTitulo.setId("labelSubTitulo");
+        lbNomeApp.setId("labelNomeApp");
+        cabecalho.setId("cabecalhoEstudante");
+    }
+
+    private void disporVista() {
+        btnPT.setStyle("-fx-background-color: #FF0000;");
+        btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+        listaAnuncios.setPannable(true);
+        listaAnuncios.setVbarPolicy(ScrollPane.ScrollBarPolicy.ALWAYS);
+        listaAnuncios.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        listaAnuncios.setMaxHeight(650);
+
+        //Header
+        GridPane header = new GridPane();
+        header.add(btnPesquisarQuartos, 2,0);
+        header.add(btnListaFavoritos, 3, 0);
+        header.add(btnMensagensNotificacoes, 4,0);
+        header.add(btnSair, 8,0);
+        header.setHgap(5);
+        lbNomeApp.setPadding(new Insets(0, 515, 0 ,3));
+        cabecalho.getChildren().addAll(lbNomeApp, header);
+        cabecalho.setPadding(new Insets(15, 0,15,0));
+        header.setAlignment(Pos.TOP_CENTER);
+
+        //SubHeader
+        lbTitulo.setPadding(new Insets(0,645, 0,3));
+        GridPane subheader = new GridPane();
+        subheader.add(btnPT, 0,0);
+        subheader.add(btnENG, 1,0);
+        subheader.setPadding(new Insets(2,0,0,0));
+        subCabecalho.setPadding(new Insets(10, 0,20,0));
+        subCabecalho.getChildren().addAll(lbTitulo, subheader);
+
+        painel.getChildren().addAll(cabecalho,subCabecalho);
+
 
         //Items de finalização de pagina
         linha.setStartX(50);

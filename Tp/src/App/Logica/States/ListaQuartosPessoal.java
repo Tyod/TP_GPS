@@ -2,10 +2,27 @@ package App.Logica.States;
 
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
+import App.Logica.Data.Quarto;
+
+import java.util.ArrayList;
 
 public class ListaQuartosPessoal extends AppStateAdapter{
     public ListaQuartosPessoal(AppData dados) {
         super(dados);
+    }
+
+    public ArrayList<Quarto> getListaQuartosPessoal(){ return dados.getListaQuartosPessoal(); }
+
+    public void removeQuartoPessoal(int id, boolean flag) {
+        dados.removeQuartoPessoal(id);
+        dados.removeQuartoPendente(id);
+
+        if(flag)
+            dados.removeQuartoPublicado(id);
+    }
+
+    public void adcionaQuartoPublico(int id) {
+        dados.adicionaQuartoPublicado(dados.getQuartoFromListaQuartosPessoal(id));
     }
 
     public IAppState geraVistaMensagensSenhorio(){

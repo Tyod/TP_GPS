@@ -1,5 +1,7 @@
 package App.Logica.Data;
 
-public enum DisponibilidadeQuarto {
+import java.io.Serializable;
+
+public enum DisponibilidadeQuarto implements Serializable {
     disponivel , indisponivel, brevemente_disponivel
 }

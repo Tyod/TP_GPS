@@ -2,12 +2,17 @@ package App.Logica.States;
 
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
+import App.Logica.Data.Quarto;
+
+import java.util.ArrayList;
 
 public class ListaFavoritos extends AppStateAdapter{
 
     public ListaFavoritos(AppData dados) {
         super(dados);
     }
+
+    public ArrayList<Quarto> getListaQuartosFavoritos() { return dados.getListaFavoritos(); }
 
     public IAppState geraVistaListaQuartosPublicados(){ return new ListaQuartosPublicados(dados); }
 

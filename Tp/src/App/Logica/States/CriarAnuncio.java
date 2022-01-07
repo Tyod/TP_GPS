@@ -2,11 +2,17 @@ package App.Logica.States;
 
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
+import App.Logica.Data.DisponibilidadeQuarto;
 
 public class CriarAnuncio extends AppStateAdapter{
 
     public CriarAnuncio(AppData dados) {
         super(dados);
+    }
+
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+        dados.adicionaQuartoPessoal(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem);
+        dados.adicionaQuartoPendentes(dados.getLastQuartoFromListaQuartosPessoal());
     }
 
     public IAppState geraVistaListaQuartosPessoal(){ return new ListaQuartosPessoal(dados); }

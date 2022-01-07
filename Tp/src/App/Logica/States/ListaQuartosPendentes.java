@@ -2,6 +2,9 @@ package App.Logica.States;
 
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
+import App.Logica.Data.Quarto;
+
+import java.util.ArrayList;
 
 public class ListaQuartosPendentes extends AppStateAdapter{
 
@@ -9,8 +12,18 @@ public class ListaQuartosPendentes extends AppStateAdapter{
         super(dados);
     }
 
+    public ArrayList<Quarto> getListaQuartosPendentes() { return dados.getListaQuartosPendentes(); }
+
     public IAppState geraVistaEscolheVista(){
         return new EscolheVista(dados);
+    }
+
+    public void removeQuartoPessoal(int id){
+        dados.removeQuartoPessoal(id);
+    }
+
+    public boolean removeQuartoPendente(int id){
+        return dados.removeQuartoPendente(id);
     }
 
     @Override
