@@ -20,6 +20,10 @@ public class ListaQuartosPublicados extends AppStateAdapter{
         return new MensagensNotificacoes_Estudante(dados);
     }
 
+    public void adicionaQuartoFavorito(int id){
+        dados.adicionaQuartoFavorito(dados.getQuartoFromListaQuartosPessoal(id));
+    }
+
     public IAppState geraVistaEscolheVista(){
         return new EscolheVista(dados);
     }

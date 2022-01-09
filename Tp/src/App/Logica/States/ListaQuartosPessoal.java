@@ -17,11 +17,14 @@ public class ListaQuartosPessoal extends AppStateAdapter{
         dados.removeQuartoPessoal(id);
         dados.removeQuartoPendente(id);
 
-        if(flag)
+        if(flag) {
             dados.removeQuartoPublicado(id);
+            dados.removeQuartoFavorito(id);
+        }
     }
 
     public void adcionaQuartoPublico(int id) {
+        dados.guardaListaPessoal("ListaQuartosPessoal.txt");
         dados.adicionaQuartoPublicado(dados.getQuartoFromListaQuartosPessoal(id));
     }
 

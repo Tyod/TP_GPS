@@ -8,12 +8,16 @@ import App.UI.Resources.CSSManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class GUICriarAnuncio extends BorderPane {
 
@@ -83,7 +87,7 @@ public class GUICriarAnuncio extends BorderPane {
         cabecalho = new HBox();
         subCabecalho = new HBox();
 
-        imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+        imageView = new ImageView("file:///C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
         lbImagem = new Label("Imagem:");
         btnNovaImagem = new Button("Selecionar Imagem");
         lbDetalhes = new Label("Detalhes:");
@@ -228,25 +232,28 @@ public class GUICriarAnuncio extends BorderPane {
 
         btnCriar.setOnAction((e)->{
             if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "WI-FI", true, Integer.parseInt(tfContactos.getText()), "file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+
+            if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Não possui serviços", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
             appObs.geraVistaListaQuartosPessoal();
         });
@@ -266,7 +273,21 @@ public class GUICriarAnuncio extends BorderPane {
         });
 
         btnNovaImagem.setOnAction((e)->{
-            //POR COMPLETAR
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Upload File Path");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif")
+            );
+
+
+            File file = fileChooser.showOpenDialog(this.getScene().getWindow());
+
+            if (file != null) {
+                imageView.setImage(new Image(file.getPath()));
+            } else  {
+                System.out.println("error"); // or something else
+            }
+
         });
     }
 }

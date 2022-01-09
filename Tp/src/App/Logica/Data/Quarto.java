@@ -18,6 +18,7 @@ public class Quarto implements Serializable {
     private String imagem;
     private Boolean aprovacao;
     private Boolean publicado;
+    private Boolean favorito;
 
     public Quarto(DisponibilidadeQuarto disponiblidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem) {
         this.id = Quarto.Contador;
@@ -28,8 +29,9 @@ public class Quarto implements Serializable {
         this.despesas = despesas;
         this.contacto = contacto;
         this.imagem = imagem;
-        this.aprovacao = false;
+        this.aprovacao = null;
         this.publicado = false;
+        this.favorito = false;
 
 
         Quarto.Contador++;
@@ -58,6 +60,7 @@ public class Quarto implements Serializable {
     public void setImagem(String imagem) { this.imagem = imagem; }
     public void setAprovacao(Boolean aprovacao) { this.aprovacao = aprovacao; }
     public void setPublicado(Boolean publicado) { this.publicado = publicado; }
+    public void setFavorito(Boolean favorito) {this.favorito = favorito;}
 
     //GETTERS
     public DisponibilidadeQuarto getDisponiblidade() {
@@ -82,6 +85,7 @@ public class Quarto implements Serializable {
     public String getImagem() { return imagem; }
     public Boolean getAprovacao() { return aprovacao; }
     public Boolean getPublicado() { return publicado; }
+    public Boolean getFavorito() {return favorito;}
 
     @Override
     public String toString() {

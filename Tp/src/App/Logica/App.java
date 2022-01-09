@@ -3,6 +3,7 @@ package App.Logica;
 import App.Logica.Data.*;
 import App.Logica.States.EscolheVista;
 import App.Logica.States.IAppState;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,7 +104,7 @@ public class App {
     //Adicona Mensagens
     public void adicionaMensagem(TipoUtilzadores estudante, String text) { estado.adicionaMensagem(estudante, text); }
 
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem) {
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem) {
         estado.adicionaQuartoPessoal(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem);
     }
     public void removeQuartoPessoal(int id, Boolean flag) {
@@ -117,4 +118,6 @@ public class App {
     public void adcionaQuartoPublico(int id) {
         estado.adcionaQuartoPublico(id);
     }
+
+    public void adicionaQuartoFavorito(int id) {estado.adicionaQuartoFavorito(id);}
 }

@@ -1,5 +1,7 @@
 package App.Logica.Data;
 
+import javafx.scene.image.Image;
+
 import java.io.*;
 import java.util.ArrayList;
 
@@ -73,8 +75,8 @@ public class AppData {
         guardaListaPendentes("ListaQuartosPendentes.txt");
     }
 
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
-        listaQuartosPessoal.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem));
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem){
+        listaQuartosPessoal.add(new Quarto(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem.getUrl()));
         guardaListaPessoal("ListaQuartosPessoal.txt");
     }
 

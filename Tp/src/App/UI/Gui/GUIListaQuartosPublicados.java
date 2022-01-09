@@ -89,22 +89,25 @@ public class GUIListaQuartosPublicados extends BorderPane {
 
         //Anuncios
         ArrayList<Quarto> listTemp = appObs.getListaQuartosPublicados();
-        for (int i=0; i<listTemp.size(); i++) {
+        for (Quarto temp : appObs.getListaQuartosPublicados()) {
             GridPane anuncio = new GridPane();
             anuncio.setMaxWidth(950);
-            ImageView imageView = new ImageView(listTemp.get(i).getImagem());
+            ImageView imageView = new ImageView(temp.getImagem());
             imageView.setFitHeight(150);
             imageView.setFitWidth(150);
-            anuncio.add(new Label("Estado: " + listTemp.get(i).getDisponiblidade()),1,0);
-            anuncio.add(new Label("Preço: " + listTemp.get(i).getPreco()),1,1);
-            anuncio.add(new Label("Serviços: " + listTemp.get(i).getServicos()), 1,2);
-            anuncio.add(new Label("Localização: " + listTemp.get(i).getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Notas: " + listTemp.get(i).getDespesas()),1, 4);
-            anuncio.add(new Label("Contactos: " + listTemp.get(i).getContacto()),1,5);
+            anuncio.add(new Label("Estado: " + temp.getDisponiblidade()),1,0);
+            anuncio.add(new Label("Preço: " + temp.getPreco()),1,1);
+            anuncio.add(new Label("Serviços: " + temp.getServicos()), 1,2);
+            anuncio.add(new Label("Localização: " + temp.getLocalizacao()),1 ,3);
+            anuncio.add(new Label("Notas: " + temp.getDespesas()),1, 4);
+            anuncio.add(new Label("Contactos: " + temp.getContacto()),1,5);
             anuncio.setVgap(8);
             anuncio.setPadding(new Insets(0,250,0,20));
             Button btnFav = new Button("⭐");
             btnFav.setOnAction((e)->{
+                if(!temp.getFavorito())
+                appObs.adicionaQuartoFavorito(temp.getId());
+                temp.setFavorito(true);
                 appObs.geraVistaFavoritos();
             });
             Button btnMsg = new Button("✉");

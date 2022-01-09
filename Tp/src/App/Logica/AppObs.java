@@ -5,6 +5,7 @@ import App.Logica.Data.Mensagem;
 import App.Logica.Data.Quarto;
 import App.Logica.Data.TipoUtilzadores;
 import App.Logica.States.IAppState;
+import javafx.scene.image.Image;
 
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
@@ -32,7 +33,7 @@ public class AppObs {
 
 
 
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem){
         app.adicionaQuartoPessoal(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem);
     }
 
@@ -47,6 +48,7 @@ public class AppObs {
     public void adcionaQuartoPublico(int id) {
         app.adcionaQuartoPublico(id);
     }
+    public void adicionaQuartoFavorito(int id) {app.adicionaQuartoFavorito(id);}
 
    //Get Lists
     public ArrayList<Quarto> getListaQuartosPublicados() { return app.getListaQuartosPublicados(); }

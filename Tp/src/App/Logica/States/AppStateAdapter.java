@@ -1,6 +1,7 @@
 package App.Logica.States;
 
 import App.Logica.Data.*;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -23,8 +24,9 @@ public abstract class AppStateAdapter  implements IAppState{
     public ArrayList<Quarto> getListaQuartosFavoritos(){ return null; }
     public ArrayList<Mensagem> getListaMensagens() { return null; }
     public void adicionaMensagem(TipoUtilzadores utilizador, String msg){}
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){}
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem){}
     public void adcionaQuartoPublico(int id){}
     public void removeQuartoPessoal(int id, boolean flag){}
     public boolean removeQuartoPendente(int id){ return false; }
+    public void adicionaQuartoFavorito(int id){}
 }

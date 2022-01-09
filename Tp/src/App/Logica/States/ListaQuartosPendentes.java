@@ -23,6 +23,7 @@ public class ListaQuartosPendentes extends AppStateAdapter{
     }
 
     public boolean removeQuartoPendente(int id){
+        dados.guardaListaPessoal("ListaQuartosPessoal.txt");
         return dados.removeQuartoPendente(id);
     }
 

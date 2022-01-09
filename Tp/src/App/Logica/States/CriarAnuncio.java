@@ -3,6 +3,7 @@ package App.Logica.States;
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
 import App.Logica.Data.DisponibilidadeQuarto;
+import javafx.scene.image.Image;
 
 public class CriarAnuncio extends AppStateAdapter{
 
@@ -10,7 +11,7 @@ public class CriarAnuncio extends AppStateAdapter{
         super(dados);
     }
 
-    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem){
+    public void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem){
         dados.adicionaQuartoPessoal(disponibilidade, preco, localizacao, servicos, despesas, contacto, imagem);
         dados.adicionaQuartoPendentes(dados.getLastQuartoFromListaQuartosPessoal());
     }

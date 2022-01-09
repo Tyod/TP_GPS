@@ -93,7 +93,7 @@ public class GUIListaFavoritos extends BorderPane {
             HBox realAnuncio = new HBox();
             realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
             realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
-            realAnuncio.setMaxWidth(600);
+            realAnuncio.setMaxWidth(800);
             realAnuncio.setPadding(new Insets(20, 20, 20, 20));
             painel.getChildren().add(realAnuncio);
         }

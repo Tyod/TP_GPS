@@ -5,6 +5,7 @@ import App.Logica.Data.DisponibilidadeQuarto;
 import App.Logica.Data.Mensagem;
 import App.Logica.Data.Quarto;
 import App.Logica.Data.TipoUtilzadores;
+import javafx.scene.image.Image;
 
 import java.util.ArrayList;
 
@@ -29,8 +30,9 @@ public interface IAppState {
     ArrayList<Mensagem> getListaMensagens();
     void adicionaMensagem(TipoUtilzadores utilizador, String msg);
 
-    void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, String imagem);
+    void adicionaQuartoPessoal(DisponibilidadeQuarto disponibilidade, int preco, String localizacao, String servicos, Boolean despesas, long contacto, Image imagem);
     void adcionaQuartoPublico(int id);
     void removeQuartoPessoal(int id, boolean flag);
     boolean removeQuartoPendente(int id);
+    void adicionaQuartoFavorito(int id);
 }
