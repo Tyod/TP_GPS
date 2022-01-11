@@ -8,12 +8,16 @@ import App.UI.Resources.CSSManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Line;
+import javafx.stage.FileChooser;
+
+import java.io.File;
 
 public class GUIEditarAnuncio extends BorderPane {
     private AppObs appObs;
@@ -46,7 +50,7 @@ public class GUIEditarAnuncio extends BorderPane {
     Label lbContactos; TextField tfContactos;
 
     //Painel Botoes criacao anuncio
-    Button btnCriar;
+    Button btnGuardar;
     Button btnCancelar;
     VBox painelButoes;
 
@@ -65,7 +69,36 @@ public class GUIEditarAnuncio extends BorderPane {
         CSSManager.setCSS(this, "mystyles.css");
         appObs.registaPropertyChangeListener(
                 new PropsID("prop_estado"),
-                (e) -> { this.setVisible(appObs.getSituacao() == AppSituation.Editar_anuncio);});
+                (e) -> {
+                    this.setVisible(appObs.getSituacao() == AppSituation.Editar_anuncio);
+
+                    if(appObs.getSituacao() == AppSituation.Editar_anuncio){
+                        repoemVista();
+                    }
+                });
+    }
+
+    private void repoemVista() {
+        cbEstado.setValue(appObs.getTempQuarto().getDisponiblidade());
+        tfPreco.setText(Integer.toString(appObs.getTempQuarto().getPreco()));
+        if(appObs.getTempQuarto().getServicos().equals("Limpeza // TV Cabo // WI-FI"))
+            chLimpeza.setSelected(true);chTvcabo.setSelected(true);chWifi.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("Limpeza // WI-FI"))
+            chLimpeza.setSelected(true);chWifi.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("Limpeza // TV Cabo"))
+            chLimpeza.setSelected(true);chTvcabo.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("TV Cabo // WI-FI"))
+            chTvcabo.setSelected(true);chWifi.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("Limpeza"))
+            chLimpeza.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("TV Cabo"))
+            chTvcabo.setSelected(true);
+        if(appObs.getTempQuarto().getServicos().equals("WI-FI"))
+            chWifi.setSelected(true);
+        tfLocalizacao.setText(appObs.getTempQuarto().getLocalizacao());
+        tfNotas.setText(appObs.getTempQuarto().getDespesas().toString());
+        tfContactos.setText(Long.toString(appObs.getTempQuarto().getContacto()));
+        imageView.setImage(new Image(appObs.getTempQuarto().getImagem()));
     }
 
     private void criarComponentes() {
@@ -80,7 +113,7 @@ public class GUIEditarAnuncio extends BorderPane {
         cabecalho = new HBox();
         subCabecalho = new HBox();
 
-        imageView = new ImageView("file:///C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+        imageView = new ImageView("App/UI/Resources/Images/DefaultImage.png");
         lbImagem = new Label("Imagem:");
         btnNovaImagem = new Button("Alerar Imagem");
         lbDetalhes = new Label("Detalhes:");
@@ -102,7 +135,7 @@ public class GUIEditarAnuncio extends BorderPane {
         lbContactos = new Label("Contactos: ");
         tfContactos = new TextField("Inserir contacto...");
         painelImagem = new VBox();
-        btnCriar = new Button("✔");
+        btnGuardar = new Button("✔");
         btnCancelar = new Button("✖");
         painelButoes = new VBox();
         painelCriacao = new HBox();
@@ -183,10 +216,10 @@ public class GUIEditarAnuncio extends BorderPane {
         zonaDeDetalhes.setAlignment(Pos.CENTER);
 
         //Painel Botoes criacao anuncio
-        btnCriar.setPadding(new Insets(7.5,7.5,7.5,7.5));
+        btnGuardar.setPadding(new Insets(7.5,7.5,7.5,7.5));
         btnCancelar.setPadding(new Insets(7.5,7.5,7.5,7.5));
         painelButoes.setSpacing(2);
-        painelButoes.getChildren().addAll(btnCriar, btnCancelar);
+        painelButoes.getChildren().addAll(btnGuardar, btnCancelar);
 
 
         //Zona de Criação do anuncio
@@ -222,8 +255,31 @@ public class GUIEditarAnuncio extends BorderPane {
             appObs.geraVistaEscolheVista();
         });
 
-        btnCriar.setOnAction((e)->{
-            appObs.geraVistaListaQuartosPessoal();
+        btnGuardar.setOnAction((e)->{
+            appObs.getTempQuarto().setDisponiblidade((DisponibilidadeQuarto) cbEstado.getValue());
+            appObs.getTempQuarto().setPreco(Integer.parseInt(tfPreco.getText()));
+
+            if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
+                appObs.getTempQuarto().setServicos("Limpeza // TV Cabo // WI-FI");
+            if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
+                appObs.getTempQuarto().setServicos("Limpeza // WI-FI");
+            if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
+                appObs.getTempQuarto().setServicos("Limpeza // TV Cabo");
+            if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
+                appObs.getTempQuarto().setServicos("TV Cabo // WI-FI");
+            if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
+                appObs.getTempQuarto().setServicos("Limpeza");
+            if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
+                appObs.getTempQuarto().setServicos("TV Cabo");
+            if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                appObs.getTempQuarto().setServicos("WI-FI");
+            if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                appObs.getTempQuarto().setServicos("Não possui serviços");
+
+            appObs.getTempQuarto().setLocalizacao(tfLocalizacao.getText());
+            appObs.getTempQuarto().setContacto(Integer.parseInt(tfContactos.getText()));
+
+                appObs.geraVistaListaQuartosPessoal();
         });
 
         btnCancelar.setOnAction((e)->{
@@ -241,7 +297,20 @@ public class GUIEditarAnuncio extends BorderPane {
         });
 
         btnNovaImagem.setOnAction((e)->{
-            //POR COMPLETAR
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Upload File Path");
+            fileChooser.getExtensionFilters().addAll(
+                    new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif")
+            );
+
+
+            File file = fileChooser.showOpenDialog(this.getScene().getWindow());
+
+            if (file != null) {
+                imageView.setImage(new Image("file:///" + file.getPath()));
+            } else  {
+                System.out.println("error");
+            }
         });
     }
 }

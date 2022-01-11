@@ -79,9 +79,9 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
             estudante.setStyle("-fx-font: 16 arial;");
 
             if(temp.getAutor() == TipoUtilzadores.Estudante)
-                imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarEstudante.jpg");
+                imageView = new ImageView("App/UI/Resources/Images/AvatarEstudante.jpg");
             else
-                imageView = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
+                imageView = new ImageView("App/UI/Resources/Images/AvatarSenhorio.jpg");
 
             imageView.setFitWidth(30);
             imageView.setFitHeight(30);
@@ -198,7 +198,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
 
         btnEnviaMsg.setOnAction((e)->{
             ImageView imageView2;
-            imageView2 = new ImageView("file:///C:\\Users\\andre\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\PWEB\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\AvatarSenhorio.jpg");
+            imageView2 = new ImageView("App/UI/Resources/Images/AvatarSenhorio.jpg");
             imageView2.setFitWidth(30);
             imageView2.setFitHeight(30);
             Label mensagem = new Label(tfInputMensagem.getText());

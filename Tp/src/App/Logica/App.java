@@ -120,4 +120,12 @@ public class App {
     }
 
     public void adicionaQuartoFavorito(int id) {estado.adicionaQuartoFavorito(id);}
+
+    public void setTempQuarto(int id) {
+        estado.setTempQuarto(id);
+    }
+
+    public Quarto getTempQuarto() {
+        return estado.getTempQuarto();
+    }
 }

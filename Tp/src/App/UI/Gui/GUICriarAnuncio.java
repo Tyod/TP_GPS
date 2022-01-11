@@ -72,7 +72,21 @@ public class GUICriarAnuncio extends BorderPane {
                 new PropsID("prop_estado"),
                 (e) -> {
                     this.setVisible(appObs.getSituacao() == AppSituation.Criar_Anuncio);
+
+                    if(appObs.getSituacao() == AppSituation.Criar_Anuncio){
+                        repoemVista();
+                    }
                 });
+    }
+
+    private void repoemVista() {
+        imageView.setImage(new Image("App/UI/Resources/Images/DefaultImage.png"));
+        cbEstado.setValue(null);
+        tfPreco.setText("Inserir preço...");
+        chTvcabo.setSelected(false);chWifi.setSelected(false);chLimpeza.setSelected(false);
+        tfLocalizacao.setText("Inserir localização...");
+        tfNotas.setText("Inserir notas...");
+        tfContactos.setText("Inserir contacto...");
     }
 
     private void criarComponentes() {
@@ -87,7 +101,7 @@ public class GUICriarAnuncio extends BorderPane {
         cabecalho = new HBox();
         subCabecalho = new HBox();
 
-        imageView = new ImageView("file:///C:\\Users\\AndreSilva\\OneDrive - ISEC\\Universidade\\5 - 3º Ano_1º Semestre\\GPS\\TP_GPS\\Tp\\src\\App\\UI\\Resources\\Images\\DefaultImage.png");
+        imageView = new ImageView("App/UI/Resources/Images/DefaultImage.png");
         lbImagem = new Label("Imagem:");
         btnNovaImagem = new Button("Selecionar Imagem");
         lbDetalhes = new Label("Detalhes:");
@@ -283,9 +297,9 @@ public class GUICriarAnuncio extends BorderPane {
             File file = fileChooser.showOpenDialog(this.getScene().getWindow());
 
             if (file != null) {
-                imageView.setImage(new Image(file.getPath()));
+                imageView.setImage(new Image("file:///" + file.getPath()));
             } else  {
-                System.out.println("error"); // or something else
+                System.out.println("error");
             }
 
         });

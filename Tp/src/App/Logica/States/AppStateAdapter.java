@@ -29,4 +29,6 @@ public abstract class AppStateAdapter  implements IAppState{
     public void removeQuartoPessoal(int id, boolean flag){}
     public boolean removeQuartoPendente(int id){ return false; }
     public void adicionaQuartoFavorito(int id){}
+    public Quarto getTempQuarto(){ return null;}
+    public void setTempQuarto(int id){}
 }

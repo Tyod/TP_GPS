@@ -86,6 +86,8 @@ public class GUIListaQuartosPessoal extends BorderPane {
             Button btnEditar = new Button("✏");
             btnEditar.setPadding(new Insets(4.8,9.5,4.8,9.5));
             btnEditar.setOnAction((e)->{
+                System.out.println(temp.getId());
+                appObs.setTempQuarto(temp.getId());
                 appObs.geraVistaEditarAnuncio();
             });
             Button btnApagar = new Button("\uD83D\uDDD1");
@@ -105,9 +107,10 @@ public class GUIListaQuartosPessoal extends BorderPane {
                 appObs.removeQuartoPessoal(temp.getId(), temp.getPublicado());
             });
             btnPublicar.setOnAction((e)->{
-                if(temp.getAprovacao() && !temp.getPublicado())
+                if(temp.getAprovacao() && !temp.getPublicado()) {
                     appObs.adcionaQuartoPublico(temp.getId());
-                temp.setPublicado(true);
+                    temp.setPublicado(true);
+                }
             });
         }
 

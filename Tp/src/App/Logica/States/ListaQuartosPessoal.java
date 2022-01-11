@@ -28,6 +28,10 @@ public class ListaQuartosPessoal extends AppStateAdapter{
         dados.adicionaQuartoPublicado(dados.getQuartoFromListaQuartosPessoal(id));
     }
 
+    public void setTempQuarto(int id){
+        dados.setTempQuarto(dados.getQuartoFromListaQuartosPessoal(id));
+    }
+
     public IAppState geraVistaMensagensSenhorio(){
         return new MensagensNotificacoes_Senhorio(dados);
     }

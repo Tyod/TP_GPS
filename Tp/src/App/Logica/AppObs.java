@@ -50,6 +50,9 @@ public class AppObs {
     }
     public void adicionaQuartoFavorito(int id) {app.adicionaQuartoFavorito(id);}
 
+    public void setTempQuarto(int id) { app.setTempQuarto(id); }
+    public Quarto getTempQuarto() { return app.getTempQuarto(); }
+
    //Get Lists
     public ArrayList<Quarto> getListaQuartosPublicados() { return app.getListaQuartosPublicados(); }
     public ArrayList<Quarto> getListaQuartosFavoritos() { return app.getListaQuartosFavoritos(); }
@@ -82,4 +85,7 @@ public class AppObs {
     public void geraVistaListaQuartosPessoal() {
         disparaEventos(app.geraVistaListaQuartosPessoal());
     }
+
+
+
 }

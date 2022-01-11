@@ -35,4 +35,7 @@ public interface IAppState {
     void removeQuartoPessoal(int id, boolean flag);
     boolean removeQuartoPendente(int id);
     void adicionaQuartoFavorito(int id);
+
+    Quarto getTempQuarto();
+    void setTempQuarto(int id);
 }

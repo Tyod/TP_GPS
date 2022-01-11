@@ -61,6 +61,7 @@ public class Quarto implements Serializable {
     public void setAprovacao(Boolean aprovacao) { this.aprovacao = aprovacao; }
     public void setPublicado(Boolean publicado) { this.publicado = publicado; }
     public void setFavorito(Boolean favorito) {this.favorito = favorito;}
+    public static void setContador(int contador) { Contador = contador; }
 
     //GETTERS
     public DisponibilidadeQuarto getDisponiblidade() {
@@ -79,9 +80,7 @@ public class Quarto implements Serializable {
     public Boolean getDespesas() {
         return despesas;
     }
-    public long getContacto() {
-        return contacto;
-    }
+    public long getContacto() { return contacto; }
     public String getImagem() { return imagem; }
     public Boolean getAprovacao() { return aprovacao; }
     public Boolean getPublicado() { return publicado; }

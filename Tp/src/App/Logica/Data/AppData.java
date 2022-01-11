@@ -6,6 +6,7 @@ import java.io.*;
 import java.util.ArrayList;
 
 public class AppData {
+    private Quarto tempQuarto;
     private  ArrayList<Quarto> listaQuartoPublicados;
     private  ArrayList<Quarto> listaQuartosPendentes;
     private  ArrayList<Quarto> listaQuartosPessoal;
@@ -21,6 +22,8 @@ public class AppData {
 
         listaMensagens = new ArrayList<>();
 
+        tempQuarto = null;
+
         //guardaListaPublicados("ListaQuartosPublicados.txt");
         //guardaListaPendentes("ListaQuartosPendentes.txt");
         //guardaListaPessoal("ListaQuartosPessoal.txt");
@@ -33,6 +36,30 @@ public class AppData {
         carregaListaFavoritos("ListaFavoritos.txt");
 
         carregaMensagens("ListaMensagens.txt");
+
+        iniciaContadorQuartos();
+    }
+
+    private void iniciaContadorQuartos() {
+        if(listaQuartosPessoal.size() == 0){
+            Quarto.setContador(0);
+        }
+        else{
+            int max=0;
+            for(Quarto temp : listaQuartosPessoal){
+                if(temp.getId() >= max)
+                    max = temp.getId();
+            }
+            Quarto.setContador(max+1);
+        }
+    }
+
+    public Quarto getTempQuarto() {
+        return tempQuarto;
+    }
+
+    public void setTempQuarto(Quarto tempQuarto) {
+        this.tempQuarto = tempQuarto;
     }
 
     public ArrayList<Quarto> getListaQuartosPendentes() {

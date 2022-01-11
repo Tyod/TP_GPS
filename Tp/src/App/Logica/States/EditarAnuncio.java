@@ -2,6 +2,7 @@ package App.Logica.States;
 
 import App.Logica.AppSituation;
 import App.Logica.Data.AppData;
+import App.Logica.Data.Quarto;
 
 public class EditarAnuncio  extends AppStateAdapter{
 
@@ -15,6 +16,12 @@ public class EditarAnuncio  extends AppStateAdapter{
 
     public IAppState geraVistaEscolheVista(){
         return new EscolheVista(dados);
+    }
+
+    public Quarto getTempQuarto(){ return dados.getTempQuarto(); }
+
+    public void setTempQuarto(int id){
+        dados.setTempQuarto(dados.getQuartoFromListaQuartosPessoal(id));
     }
 
     @Override
