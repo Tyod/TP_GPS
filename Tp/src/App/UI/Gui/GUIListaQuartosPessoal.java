@@ -77,7 +77,7 @@ public class GUIListaQuartosPessoal extends BorderPane {
             anuncio.add(new Label("Preço: " + temp.getPreco()),1,1);
             anuncio.add(new Label("Serviços: " + temp.getServicos()), 1,2);
             anuncio.add(new Label("Localização: " + temp.getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Notas: " + temp.getDespesas()),1, 4);
+            anuncio.add(new Label("Despesas: " + temp.getDespesas()),1, 4);
             anuncio.add(new Label("Contactos: " + temp.getContacto()),1,5);
             anuncio.add(new Label("Aprovação: " + temp.getAprovacao()), 1,6);
             anuncio.add(new Label("Publicado: " + temp.getPublicado()), 1,7);

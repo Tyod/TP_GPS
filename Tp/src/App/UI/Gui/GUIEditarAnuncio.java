@@ -22,6 +22,8 @@ import java.io.File;
 public class GUIEditarAnuncio extends BorderPane {
     private AppObs appObs;
 
+    Boolean despesas  = false;
+
     //Items Cabeçalho
     Label lbNomeApp;
     Button btnPesquisarQuartos;
@@ -46,7 +48,7 @@ public class GUIEditarAnuncio extends BorderPane {
     Label lbPreco; TextField tfPreco;
     Label lbServicos; CheckBox chWifi; CheckBox chTvcabo; CheckBox chLimpeza;
     Label lbLocalizacao; TextField tfLocalizacao;
-    Label lbNotas; TextField tfNotas;
+    Label lbDespesas; Button btnDespesas;
     Label lbContactos; TextField tfContactos;
 
     //Painel Botoes criacao anuncio
@@ -96,7 +98,16 @@ public class GUIEditarAnuncio extends BorderPane {
         if(appObs.getTempQuarto().getServicos().equals("WI-FI"))
             chWifi.setSelected(true);
         tfLocalizacao.setText(appObs.getTempQuarto().getLocalizacao());
-        tfNotas.setText(appObs.getTempQuarto().getDespesas().toString());
+        if(appObs.getTempQuarto().getDespesas()) {
+            btnDespesas.setText("Incluídas");
+            btnDespesas.setStyle("-fx-background-color: #00FF00");
+            despesas = true;
+        }
+        else  {
+            btnDespesas.setText("Não Incluídas");
+            btnDespesas.setStyle("-fx-background-color: #ff0000");
+            despesas = false;
+        }
         tfContactos.setText(Long.toString(appObs.getTempQuarto().getContacto()));
         imageView.setImage(new Image(appObs.getTempQuarto().getImagem()));
     }
@@ -130,8 +141,9 @@ public class GUIEditarAnuncio extends BorderPane {
         chLimpeza = new CheckBox("Limpeza");
         lbLocalizacao = new Label("Localização: ");
         tfLocalizacao = new TextField("Inserir localização...");
-        lbNotas = new Label("Notas: ");
-        tfNotas = new TextField("Inserir notas...");
+        lbDespesas = new Label("Despesas: ");
+        btnDespesas = new Button("Não Incluídas");
+        btnDespesas.setStyle("-fx-background-color: #ff0000");
         lbContactos = new Label("Contactos: ");
         tfContactos = new TextField("Inserir contacto...");
         painelImagem = new VBox();
@@ -206,9 +218,9 @@ public class GUIEditarAnuncio extends BorderPane {
         lbLocalizacao.setStyle("-fx-font-weight:bold;");
         zonaDeDetalhes.add(lbLocalizacao, 0,4);
         zonaDeDetalhes.add(tfLocalizacao, 1,4);
-        lbNotas.setStyle("-fx-font-weight:bold;");
-        zonaDeDetalhes.add(lbNotas, 0,5);
-        zonaDeDetalhes.add(tfNotas,1,5);
+        lbDespesas.setStyle("-fx-font-weight:bold;");
+        zonaDeDetalhes.add(lbDespesas, 0,5);
+        zonaDeDetalhes.add(btnDespesas,1,5);
         lbContactos.setStyle("-fx-font-weight:bold;");
         zonaDeDetalhes.add(lbContactos, 0,6);
         zonaDeDetalhes.add(tfContactos,1,6);
@@ -276,6 +288,7 @@ public class GUIEditarAnuncio extends BorderPane {
             if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
                 appObs.getTempQuarto().setServicos("Não possui serviços");
 
+            appObs.getTempQuarto().setDespesas(despesas);
             appObs.getTempQuarto().setLocalizacao(tfLocalizacao.getText());
             appObs.getTempQuarto().setContacto(Integer.parseInt(tfContactos.getText()));
 
@@ -284,6 +297,19 @@ public class GUIEditarAnuncio extends BorderPane {
 
         btnCancelar.setOnAction((e)->{
             appObs.geraVistaListaQuartosPessoal();
+        });
+
+        btnDespesas.setOnAction((e)->{
+            if(!despesas) {
+                btnDespesas.setText("Incluídas");
+                btnDespesas.setStyle("-fx-background-color: #00FF00");
+                despesas = true;
+            }
+            else  {
+                btnDespesas.setText("Não Incluídas");
+                btnDespesas.setStyle("-fx-background-color: #ff0000");
+                despesas = false;
+            }
         });
 
         btnPT.setOnAction((e)->{

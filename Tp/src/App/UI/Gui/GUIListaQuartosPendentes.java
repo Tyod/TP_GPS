@@ -77,12 +77,14 @@ public class GUIListaQuartosPendentes extends BorderPane {
             anuncio.add(new Label("Preço: " + temp.getPreco()),1,1);
             anuncio.add(new Label("Serviços: " + temp.getServicos()), 1,2);
             anuncio.add(new Label("Localização: " + temp.getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Notas: " + temp.getDespesas()),1, 4);
+            anuncio.add(new Label("Despesas: " + temp.getDespesas()),1, 4);
             anuncio.add(new Label("Contactos: " + temp.getContacto()),1,5);
             anuncio.setVgap(8);
             anuncio.setPadding(new Insets(0,250,0,20));
             Button btnAprovar = new Button("✔");
+            btnAprovar.setPadding(new Insets(7.5,7.8,7.5,7.8));
             Button btnReprovar = new Button("✖");
+            btnReprovar.setPadding(new Insets(7.5,7.5,7.5,7.5));
             VBox painelBtn = new VBox();
             painelBtn.getChildren().addAll(btnAprovar, btnReprovar);
             HBox realAnuncio = new HBox();
