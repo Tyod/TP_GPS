@@ -58,6 +58,7 @@ public class GUIListaQuartosPublicados extends BorderPane {
     Label lbLocalizacao;
     TextField tfLocalizacao;
     Button btnFiltrar;
+    Button btnInfo;
 
     //Items de finalização de pagina
     Line linha;
@@ -85,55 +86,67 @@ public class GUIListaQuartosPublicados extends BorderPane {
                 });
     }
 
+    private Boolean validaCampos() {
+        return (opcoesDisponibilidade.getValue() != null && tfPreco.getText().matches("^-?\\d+$") && tfLocalizacao.getText().matches("^[a-zA-Z]+$"));
+    }
+
     private void filtraVista(ArrayList<Quarto> tempLista){
-        painel.getChildren().clear();
-        painel.getChildren().addAll(cabecalho,subCabecalho,filtros);
 
-        //Anuncios
-        ArrayList<Quarto> listTemp = appObs.getListaQuartosPublicados();
-        for (Quarto temp : tempLista) {
-            GridPane anuncio = new GridPane();
-            anuncio.setMaxWidth(950);
-            ImageView imageView = new ImageView(temp.getImagem());
-            imageView.setFitHeight(150);
-            imageView.setFitWidth(150);
-            anuncio.add(new Label("Estado: " + temp.getDisponiblidade()),1,0);
-            anuncio.add(new Label("Preço: " + temp.getPreco()),1,1);
-            anuncio.add(new Label("Serviços: " + temp.getServicos()), 1,2);
-            anuncio.add(new Label("Localização: " + temp.getLocalizacao()),1 ,3);
-            anuncio.add(new Label("Despesas: " + temp.getDespesas()),1, 4);
-            anuncio.add(new Label("Contactos: " + temp.getContacto()),1,5);
-            anuncio.setVgap(8);
-            anuncio.setPadding(new Insets(0,250,0,20));
-            Button btnFav = new Button("⭐");
-            btnFav.setOnAction((e)->{
-                if(!temp.getFavorito())
-                    appObs.adicionaQuartoFavorito(temp.getId());
-                temp.setFavorito(true);
-                appObs.geraVistaFavoritos();
-            });
-            Button btnMsg = new Button("✉");
-            btnMsg.setOnAction((e)->{
-                appObs.geraVistaMensagensEstudante();
-            });
-            btnFav.setPadding(new Insets(7.5,7.8,7.5,7.8));
-            btnMsg.setPadding(new Insets(7.5,7.5,7.5,7.5));
-            VBox painelBtn = new VBox();
-            painelBtn.getChildren().addAll(btnFav, btnMsg);
-            HBox realAnuncio = new HBox();
-            realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
-            realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
-            realAnuncio.setMaxWidth(800);
-            realAnuncio.setPadding(new Insets(20, 20, 20, 20));
-            painel.getChildren().add(realAnuncio);
+        if(validaCampos()) {
+            painel.getChildren().clear();
+            painel.getChildren().addAll(cabecalho, subCabecalho, filtros);
+
+            //Anuncios
+            ArrayList<Quarto> listTemp = appObs.getListaQuartosPublicados();
+            for (Quarto temp : tempLista) {
+                GridPane anuncio = new GridPane();
+                anuncio.setMaxWidth(950);
+                ImageView imageView = new ImageView(temp.getImagem());
+                imageView.setFitHeight(150);
+                imageView.setFitWidth(150);
+                anuncio.add(new Label("Estado: " + temp.getDisponiblidade()), 1, 0);
+                anuncio.add(new Label("Preço: " + temp.getPreco()), 1, 1);
+                anuncio.add(new Label("Serviços: " + temp.getServicos()), 1, 2);
+                anuncio.add(new Label("Localização: " + temp.getLocalizacao()), 1, 3);
+                anuncio.add(new Label("Despesas: " + temp.getDespesas()), 1, 4);
+                anuncio.add(new Label("Contactos: " + temp.getContacto()), 1, 5);
+                anuncio.setVgap(8);
+                anuncio.setPadding(new Insets(0, 250, 0, 20));
+                Button btnFav = new Button("⭐");
+                btnFav.setOnAction((e) -> {
+                    if (!temp.getFavorito())
+                        appObs.adicionaQuartoFavorito(temp.getId());
+                    temp.setFavorito(true);
+                    appObs.geraVistaFavoritos();
+                });
+                Button btnMsg = new Button("✉");
+                btnMsg.setOnAction((e) -> {
+                    appObs.geraVistaMensagensEstudante();
+                });
+                btnFav.setPadding(new Insets(7.5, 7.8, 7.5, 7.8));
+                btnMsg.setPadding(new Insets(7.5, 7.5, 7.5, 7.5));
+                VBox painelBtn = new VBox();
+                painelBtn.getChildren().addAll(btnFav, btnMsg);
+                HBox realAnuncio = new HBox();
+                realAnuncio.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: solid;");
+                realAnuncio.getChildren().addAll(imageView, anuncio, painelBtn);
+                realAnuncio.setMaxWidth(800);
+                realAnuncio.setPadding(new Insets(20, 20, 20, 20));
+                painel.getChildren().add(realAnuncio);
+            }
+
+            painel.getChildren().addAll(contentorLinha, lbMsgFimDePagina);
+
+            painel.setSpacing(20);
+            painel.setAlignment(Pos.CENTER);
+            listaAnuncios.setContent(painel);
+            setTop(listaAnuncios);
+        }else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.setTitle("Campos Inválidos//Invalid Fields");
+            alert.setHeaderText("Alguns dos campos inseridos não estão corretamente preenchidos\nSome of the fields entered are not filled in correctly");
+            alert.showAndWait();
         }
-
-        painel.getChildren().addAll(contentorLinha, lbMsgFimDePagina);
-
-        painel.setSpacing(20);
-        painel.setAlignment(Pos.CENTER);
-        listaAnuncios.setContent(painel);
-        setTop(listaAnuncios);
 
     }
 
@@ -223,6 +236,7 @@ public class GUIListaQuartosPublicados extends BorderPane {
         lbLocalizacao = new Label("Localização: ");
         tfLocalizacao = new TextField("Inserir localização...");
         btnFiltrar = new Button("Pesquisar \uD83D\uDD0D");
+        btnInfo= new Button("❓");
 
 
         linha = new Line();
@@ -265,7 +279,7 @@ public class GUIListaQuartosPublicados extends BorderPane {
         subCabecalho.getChildren().addAll(lbTitulo, subheader);
 
         //Filtros
-        filtros.setMaxWidth(850);
+        filtros.setMaxWidth(870);
         lbTituloFiltro.setStyle("-fx-font-weight:bold; -fx-font: 14 arial;");
         lbTituloFiltro.setPadding(new Insets(0,0,25,0));
         filtros.add(lbTituloFiltro, 0,0);
@@ -293,7 +307,11 @@ public class GUIListaQuartosPublicados extends BorderPane {
         lbLocalizacao.setStyle("-fx-font-weight:bold;");
         filtros.add(lbLocalizacao, 3,0);
         filtros.add(tfLocalizacao, 3,1);
+        btnFiltrar.setPadding(new Insets(3.5,3.5,3.5,3.5));
         filtros.add(btnFiltrar,  4, 3);
+        btnInfo.setPadding(new Insets(4,4,4,4));
+        btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]"));
+        filtros.add(btnInfo,5,3);
         filtros.setStyle("-fx-border-width: 3px;  -fx-border-radius: 18 18 18 18; -fx-border-style: dashed;");
         filtros.setPadding(new Insets(10,10,10,10));
         filtros.setVgap(5);
@@ -341,43 +359,85 @@ public class GUIListaQuartosPublicados extends BorderPane {
         btnFiltrar.setOnAction((e)->{
             ArrayList<Quarto> tempLista = new ArrayList<>();
             for(Quarto temp : appObs.getListaQuartosPublicados()) {
-                if (tfPreco.getText().equals("Valor max")) {
-                    if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getDespesas().equals(despesas) && temp.getLocalizacao().equals(tfLocalizacao.getText())) {
-                        if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
-                            tempLista.add(temp);
-                        if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
-                            tempLista.add(temp);
-                        if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
-                            tempLista.add(temp);
-                        if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
-                            tempLista.add(temp);
-                        if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
-                            tempLista.add(temp);
+                if (tfPreco.getText().equals("Valor max") || tfPreco.getText().equals("Max value")) {
+                    if(tfLocalizacao.getText().equals("Inserir localização...") || tfLocalizacao.getText().equals("Insert location...")) {
+                        if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getDespesas().equals(despesas)) {
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
+                                tempLista.add(temp);
+                            if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
+                                tempLista.add(temp);
+                            if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
+                                tempLista.add(temp);
+                        }
+                    }else {
+                        if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getDespesas().equals(despesas) && temp.getLocalizacao().equals(tfLocalizacao.getText())) {
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
+                                tempLista.add(temp);
+                            if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
+                                tempLista.add(temp);
+                            if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
+                                tempLista.add(temp);
+                        }
                     }
                 } else {
-                    if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getPreco() < Integer.parseInt(tfPreco.getText()) && temp.getDespesas().equals(despesas) && temp.getLocalizacao().equals(tfLocalizacao.getText())) {
-                        if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
-                            tempLista.add(temp);
-                        if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
-                            tempLista.add(temp);
-                        if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
-                            tempLista.add(temp);
-                        if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
-                            tempLista.add(temp);
-                        if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
-                            tempLista.add(temp);
-                        if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
-                            tempLista.add(temp);
+                    if (!tfLocalizacao.getText().equals("Inserir localização...") || !tfLocalizacao.getText().equals("Insert location...")) {
+                        if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getPreco() < Integer.parseInt(tfPreco.getText()) && temp.getDespesas().equals(despesas) && temp.getLocalizacao().equals(tfLocalizacao.getText())) {
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
+                                tempLista.add(temp);
+                            if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
+                                tempLista.add(temp);
+                            if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
+                                tempLista.add(temp);
+                        }
+                    }else{
+                        if (temp.getDisponiblidade() == opcoesDisponibilidade.getValue() && temp.getPreco() < Integer.parseInt(tfPreco.getText()) && temp.getDespesas().equals(despesas)) {
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && chTvCabo.isSelected() && !chWifi.isSelected() && temp.getServicos().equals("Limpeza // TV Cabo"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo // WI-FI"))
+                                tempLista.add(temp);
+                            if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Limpeza"))
+                                tempLista.add(temp);
+                            if (chTvCabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected() && temp.getServicos().equals("TV Cabo"))
+                                tempLista.add(temp);
+                            if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("WI-FI"))
+                                tempLista.add(temp);
+                            if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvCabo.isSelected() && temp.getServicos().equals("Não possui serviços"))
+                                tempLista.add(temp);
+                        }
                     }
                 }
             }
@@ -395,11 +455,59 @@ public class GUIListaQuartosPublicados extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 514, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Pesquisar Quartos");
+            btnListaFavoritos.setText("Lista De Favoritos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Lista de quartos publicados");
+            lbTitulo.setPadding(new Insets(0,490, 0,3));
+
+            lbTituloFiltro.setText("Filtros de pesquisa:");
+            lbEstado.setText("Estado:");
+            lbPreco.setText("Preço:");
+            tfPreco.setText("Valor max");
+            lbDespesas.setText("Despesas:");
+            lbServicos.setText("Serviços:");
+            chTvCabo.setText("TvCabo");
+            chLimpeza.setText("Limpeza");
+            lbLocalizacao.setText("Localização:");
+            tfLocalizacao.setText("Inserir localização...");
+            btnFiltrar.setText("Pesquisar \uD83D\uDD0D");
+            lbMsgFimDePagina.setText("Não há mais anuncios publicados a mostrar...");
+            btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]"));
+            filtros.setMaxWidth(870);
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 567, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnListaFavoritos.setText("Favorites List");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("List of published rooms");
+            lbTitulo.setPadding(new Insets(0,555, 0,3));
+
+            lbTituloFiltro.setText("Search filters:");
+            lbEstado.setText("State:");
+            lbPreco.setText("Price:");
+            tfPreco.setText("Max value");
+            lbDespesas.setText("Expenses: ");
+            lbServicos.setText("Services:");
+            chTvCabo.setText("Cable TV");
+            chLimpeza.setText("Cleaning");
+            lbLocalizacao.setText("Location:");
+            tfLocalizacao.setText("Insert location...");
+            btnFiltrar.setText("Search \uD83D\uDD0D");
+            lbMsgFimDePagina.setText("There are no more published ads to show...");
+            btnInfo.setTooltip(new Tooltip("State: Pick a state\nPrice: [0-9]+\nLocation: [a-z][A-Z]"));
+            filtros.setMaxWidth(820);
         });
     }
 }

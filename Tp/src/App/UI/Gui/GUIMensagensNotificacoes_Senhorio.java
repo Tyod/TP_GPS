@@ -189,11 +189,29 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 624, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Consultar Quartos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Mensagens Senhorio");
+            lbTitulo.setPadding(new Insets(0,600, 0,3));
+            tfInputMensagem.setText("Escreva Aqui...");
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 650, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("House Owner messages");
+            lbTitulo.setPadding(new Insets(0,550, 0,3));
+            tfInputMensagem.setText("Write here...");
         });
 
         btnEnviaMsg.setOnAction((e)->{

@@ -203,11 +203,33 @@ public class GUIMensagensNotificacoes_Estudante extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 514, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Pesquisar Quartos");
+            btnListaFavoritos.setText("Lista De Favoritos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Mensagens Estudante");
+            lbTitulo.setPadding(new Insets(0,580, 0,3));
+            tfInputMensagem.setText("Escreva Aqui...");
+
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 567, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnListaFavoritos.setText("Favorites List");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("Student messages");
+            lbTitulo.setPadding(new Insets(0,630, 0,3));
+            tfInputMensagem.setText("Write here...");
+
         });
 
         btnEnviaMsg.setOnAction((e)->{

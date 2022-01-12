@@ -200,11 +200,27 @@ public class GUIListaQuartosPessoal extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 624, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Consultar Quartos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Lista de Quartos Publicados");
+            lbTitulo.setPadding(new Insets(0,480, 0,3));
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 650, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("List of Published Rooms");
+            lbTitulo.setPadding(new Insets(0,540, 0,3));
         });
 
         btnSair.setOnAction((e)->{

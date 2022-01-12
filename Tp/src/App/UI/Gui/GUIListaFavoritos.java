@@ -199,11 +199,32 @@ public class GUIListaFavoritos extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 514, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Pesquisar Quartos");
+            btnListaFavoritos.setText("Lista De Favoritos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Lista de Favoritos");
+            lbTitulo.setPadding(new Insets(0,640, 0,3));
+
+            lbMsgFimDePagina.setText("Não há mais favoritos a mostrar...");
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 567, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnListaFavoritos.setText("Favorites List");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("Favorites List");
+            lbTitulo.setPadding(new Insets(0,710, 0,3));
+            lbMsgFimDePagina.setText("There are no more favorites to show...");
         });
     }
 }

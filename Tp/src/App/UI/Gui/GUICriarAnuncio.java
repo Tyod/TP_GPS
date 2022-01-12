@@ -56,6 +56,7 @@ public class GUICriarAnuncio extends BorderPane {
     Button btnCriar;
     Button btnCancelar;
     VBox painelButoes;
+    Button btnInfo;
 
     //Zona de Criação do anuncio
     Line linha;
@@ -129,6 +130,8 @@ public class GUICriarAnuncio extends BorderPane {
         painelImagem = new VBox();
         btnCriar = new Button("✔");
         btnCancelar = new Button("✖");
+        btnInfo= new Button("❓");
+
         painelButoes = new VBox();
         painelCriacao = new HBox();
 
@@ -210,8 +213,10 @@ public class GUICriarAnuncio extends BorderPane {
         //Painel Botoes criacao anuncio
         btnCriar.setPadding(new Insets(7.5,7.5,7.5,7.5));
         btnCancelar.setPadding(new Insets(7.5,7.5,7.5,7.5));
+        btnInfo.setPadding(new Insets(7.5,7.5,7.5,7.5));
+        btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]\nContacto: [0-9]+ (9 digitos)"));
         painelButoes.setSpacing(2);
-        painelButoes.getChildren().addAll(btnCriar, btnCancelar);
+        painelButoes.getChildren().addAll(btnCriar, btnCancelar, btnInfo);
 
 
         //Zona de Criação do anuncio
@@ -262,31 +267,38 @@ public class GUICriarAnuncio extends BorderPane {
         });
 
         btnCriar.setOnAction((e)->{
-            if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+            if(validaCampos()) {
+                if (chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // WI-FI", true, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza // TV Cabo", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo // WI-FI", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo // WI-FI", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Limpeza", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "TV Cabo", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "WI-FI", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "WI-FI", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
-                appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Não possui serviços", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
+                if (!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                    appObs.adicionaQuartoPessoal((DisponibilidadeQuarto) cbEstado.getValue(), Integer.parseInt(tfPreco.getText()), tfLocalizacao.getText(), "Não possui serviços", despesas, Integer.parseInt(tfContactos.getText()), imageView.getImage());
 
-            appObs.geraVistaListaQuartosPessoal();
+                appObs.geraVistaListaQuartosPessoal();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campos Inválidos//Invalid Fields");
+                alert.setHeaderText("Alguns dos campos inseridos não estão corretamente preenchidos\nSome of the fields entered are not filled in correctly");
+                alert.showAndWait();
+            }
         });
 
         btnCancelar.setOnAction((e)->{
@@ -296,16 +308,64 @@ public class GUICriarAnuncio extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 624, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Consultar Quartos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Criar Anuncio");
+            lbTitulo.setPadding(new Insets(0,705, 0,3));
+            lbImagem.setText("Imagem:");
+            lbDetalhes.setText("Detalhes:");
+            lbEstado.setText("Estado:");
+            lbPreco.setText("Preço:");
+            tfPreco.setText("Inserir preço...");
+            lbServicos.setText("Serviços:");
+            chLimpeza.setText("Limpeza");
+            chTvcabo.setText("TvCabo");
+            lbLocalizacao.setText("Localização:");
+            tfLocalizacao.setText("Inserir localização...");
+            lbDespesas.setText("Despesas:");
+            lbContactos.setText("Contactos:");
+            tfContactos.setText("Inserir contacto...");
+            btnNovaImagem.setText("Selecionar Imagem");
+            btnNovaImagem.setPadding(new Insets(5,107,5,107));
+            btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]\nContacto: [0-9]+ (9 digitos)"));
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 650, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("Create Ad");
+            lbTitulo.setPadding(new Insets(0,760, 0,3));
+            lbImagem.setText("Image:");
+            lbDetalhes.setText("Details:");
+            lbEstado.setText("State:");
+            lbPreco.setText("Price:");
+            tfPreco.setText("Insert price...");
+            lbServicos.setText("Services:");
+            chLimpeza.setText("Cleaning");
+            chTvcabo.setText("Cable TV");
+            lbLocalizacao.setText("Location:");
+            tfLocalizacao.setText("Insert location...");
+            lbDespesas.setText("Expenses:");
+            lbContactos.setText("Contact:");
+            tfContactos.setText("Insert contact...");
+            btnNovaImagem.setText("Select Image");
+            btnNovaImagem.setPadding(new Insets(5,125,5,125));
+            btnInfo.setTooltip(new Tooltip("State: Pick a state\nPrice: [0-9]+\nLocation: [a-z][A-Z]\nContact: [0-9]+ (9 digits)"));
         });
 
         btnNovaImagem.setOnAction((e)->{
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("Upload File Path");
+            fileChooser.setTitle("Upload Diretoria Ficheiro//Upload File Path");
             fileChooser.getExtensionFilters().addAll(
                     new FileChooser.ExtensionFilter("IMAGE FILES", "*.jpg", "*.png", "*.gif")
             );
@@ -320,5 +380,9 @@ public class GUICriarAnuncio extends BorderPane {
             }
 
         });
+    }
+
+    private Boolean validaCampos() {
+        return (cbEstado.getValue() != null && tfPreco.getText().matches("^-?\\d+$") && tfLocalizacao.getText().matches("^[a-zA-Z]+$") && tfContactos.getText().matches("^-?\\d+$") && tfContactos.getText().length() == 9);
     }
 }

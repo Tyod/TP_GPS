@@ -54,6 +54,7 @@ public class GUIEditarAnuncio extends BorderPane {
     //Painel Botoes criacao anuncio
     Button btnGuardar;
     Button btnCancelar;
+    Button btnInfo;
     VBox painelButoes;
 
     //Zona de Criação do anuncio
@@ -149,6 +150,7 @@ public class GUIEditarAnuncio extends BorderPane {
         painelImagem = new VBox();
         btnGuardar = new Button("✔");
         btnCancelar = new Button("✖");
+        btnInfo= new Button("❓");
         painelButoes = new VBox();
         painelCriacao = new HBox();
 
@@ -195,7 +197,7 @@ public class GUIEditarAnuncio extends BorderPane {
         lbImagem.setStyle("-fx-font: 24 arial; -fx-font-weight:bold;");
         painelImagem.setSpacing(10);
         btnNovaImagem.setAlignment(Pos.CENTER);
-        btnNovaImagem.setPadding(new Insets(5,107,5,107));
+        btnNovaImagem.setPadding(new Insets(5,118,5,118));
         painelImagem.getChildren().addAll(lbImagem, imageView, btnNovaImagem);
 
 
@@ -230,8 +232,10 @@ public class GUIEditarAnuncio extends BorderPane {
         //Painel Botoes criacao anuncio
         btnGuardar.setPadding(new Insets(7.5,7.5,7.5,7.5));
         btnCancelar.setPadding(new Insets(7.5,7.5,7.5,7.5));
+        btnInfo.setPadding(new Insets(7.5,7.5,7.5,7.5));
+        btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]\nContacto: [0-9]+ (9 digitos)"));
         painelButoes.setSpacing(2);
-        painelButoes.getChildren().addAll(btnGuardar, btnCancelar);
+        painelButoes.getChildren().addAll(btnGuardar, btnCancelar, btnInfo);
 
 
         //Zona de Criação do anuncio
@@ -254,6 +258,16 @@ public class GUIEditarAnuncio extends BorderPane {
         setTop(listaAnuncios);
     }
 
+    private Boolean validaCampos() {
+        System.out.println(cbEstado.getValue() != null);
+        System.out.println(tfPreco.getText().matches("^-?\\d+$"));
+        System.out.println(tfLocalizacao.getText().matches("^[a-zA-Z]+$"));
+        System.out.println(tfContactos.getText().matches("^-?\\d+$"));
+        System.out.println(tfContactos.getText().length() == 9);
+        return (cbEstado.getValue() != null && tfPreco.getText().matches("^-?\\d+$") && tfLocalizacao.getText().matches("^[a-zA-Z]+$") && tfContactos.getText().matches("^-?\\d+$") && tfContactos.getText().length() == 9);
+    }
+
+
     private void registarLiscteners() {
         btnPesquisarQuartos.setOnAction((e)->{
             appObs.geraVistaListaQuartosPessoal();
@@ -268,31 +282,38 @@ public class GUIEditarAnuncio extends BorderPane {
         });
 
         btnGuardar.setOnAction((e)->{
-            appObs.getTempQuarto().setDisponiblidade((DisponibilidadeQuarto) cbEstado.getValue());
-            appObs.getTempQuarto().setPreco(Integer.parseInt(tfPreco.getText()));
+            if(validaCampos()){
+                appObs.getTempQuarto().setDisponiblidade((DisponibilidadeQuarto) cbEstado.getValue());
+                appObs.getTempQuarto().setPreco(Integer.parseInt(tfPreco.getText()));
 
-            if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
-                appObs.getTempQuarto().setServicos("Limpeza // TV Cabo // WI-FI");
-            if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.getTempQuarto().setServicos("Limpeza // WI-FI");
-            if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
-                appObs.getTempQuarto().setServicos("Limpeza // TV Cabo");
-            if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.getTempQuarto().setServicos("TV Cabo // WI-FI");
-            if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
-                appObs.getTempQuarto().setServicos("Limpeza");
-            if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
-                appObs.getTempQuarto().setServicos("TV Cabo");
-            if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
-                appObs.getTempQuarto().setServicos("WI-FI");
-            if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
-                appObs.getTempQuarto().setServicos("Não possui serviços");
+                if(chLimpeza.isSelected() && chTvcabo.isSelected() && chWifi.isSelected())
+                    appObs.getTempQuarto().setServicos("Limpeza // TV Cabo // WI-FI");
+                if(chLimpeza.isSelected() && chWifi.isSelected() && !chTvcabo.isSelected())
+                    appObs.getTempQuarto().setServicos("Limpeza // WI-FI");
+                if(chLimpeza.isSelected() && chTvcabo.isSelected() && !chWifi.isSelected())
+                    appObs.getTempQuarto().setServicos("Limpeza // TV Cabo");
+                if(chTvcabo.isSelected() && chWifi.isSelected() && !chLimpeza.isSelected())
+                    appObs.getTempQuarto().setServicos("TV Cabo // WI-FI");
+                if(chLimpeza.isSelected() && !chWifi.isSelected() && !chTvcabo.isSelected())
+                    appObs.getTempQuarto().setServicos("Limpeza");
+                if(chTvcabo.isSelected() && !chWifi.isSelected() && !chLimpeza.isSelected())
+                    appObs.getTempQuarto().setServicos("TV Cabo");
+                if(chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                    appObs.getTempQuarto().setServicos("WI-FI");
+                if(!chWifi.isSelected() && !chLimpeza.isSelected() && !chTvcabo.isSelected())
+                    appObs.getTempQuarto().setServicos("Não possui serviços");
 
-            appObs.getTempQuarto().setDespesas(despesas);
-            appObs.getTempQuarto().setLocalizacao(tfLocalizacao.getText());
-            appObs.getTempQuarto().setContacto(Integer.parseInt(tfContactos.getText()));
+                appObs.getTempQuarto().setDespesas(despesas);
+                appObs.getTempQuarto().setLocalizacao(tfLocalizacao.getText());
+                appObs.getTempQuarto().setContacto(Integer.parseInt(tfContactos.getText()));
 
                 appObs.geraVistaListaQuartosPessoal();
+            }else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.setTitle("Campos Inválidos");
+                alert.setHeaderText("Alguns dos campos inseridos não estão corretamente preenchidos");
+                alert.showAndWait();
+            }
         });
 
         btnCancelar.setOnAction((e)->{
@@ -315,11 +336,61 @@ public class GUIEditarAnuncio extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 624, 0 ,3));
+            btnMensagensNotificacoes.setText("Mensagens");
+            btnPesquisarQuartos.setText("Consultar Quartos");
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Criar Anuncio");
+            lbTitulo.setPadding(new Insets(0,705, 0,3));
+            lbImagem.setText("Imagem:");
+            lbDetalhes.setText("Detalhes:");
+            lbEstado.setText("Estado:");
+            lbPreco.setText("Preço:");
+            tfPreco.setText("Inserir preço...");
+            lbServicos.setText("Serviços:");
+            chLimpeza.setText("Limpeza");
+            chTvcabo.setText("TvCabo");
+            lbLocalizacao.setText("Localização:");
+            tfLocalizacao.setText("Inserir localização...");
+            lbDespesas.setText("Despesas:");
+            lbContactos.setText("Contactos:");
+            tfContactos.setText("Inserir contacto...");
+            btnNovaImagem.setText("Alterar Imagem");
+            btnNovaImagem.setPadding(new Insets(5,107,5,107));
+            btnInfo.setTooltip(new Tooltip("Estado: Escolher um estado\nPreço: [0-9]+\nLocalização: [a-z][A-Z]\nContacto: [0-9]+ (9 digitos)"));
+            btnNovaImagem.setPadding(new Insets(5,117,5,117));
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 650, 0 ,3));
+            btnMensagensNotificacoes.setText("Messages");
+            btnPesquisarQuartos.setText("Consult rooms");
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("Create Ad");
+            lbTitulo.setPadding(new Insets(0,760, 0,3));
+            lbImagem.setText("Image:");
+            lbDetalhes.setText("Details:");
+            lbEstado.setText("State:");
+            lbPreco.setText("Price:");
+            tfPreco.setText("Insert price...");
+            lbServicos.setText("Services:");
+            chLimpeza.setText("Cleaning");
+            chTvcabo.setText("Cable TV");
+            lbLocalizacao.setText("Location:");
+            tfLocalizacao.setText("Insert location...");
+            lbDespesas.setText("Expenses: ");
+            lbContactos.setText("Contact:");
+            tfContactos.setText("Insert contact...");
+            btnNovaImagem.setText("Change Image");
+            btnNovaImagem.setPadding(new Insets(5,125,5,125));
+            btnInfo.setTooltip(new Tooltip("State: Pick a state\nPrice: [0-9]+\nLocation: [a-z][A-Z]\nContact: [0-9]+ (9 digits)"));
+            btnNovaImagem.setPadding(new Insets(5,119,5,119));
         });
 
         btnNovaImagem.setOnAction((e)->{

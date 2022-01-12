@@ -195,11 +195,27 @@ public class GUIListaQuartosPendentes extends BorderPane {
         btnPT.setOnAction((e)->{
             btnPT.setStyle("-fx-background-color: #FF0000;");
             btnENG.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 813, 0 ,3));
+            btnSair.setText("Sair");
+
+            lbTitulo.setText("Lista de Quartos Pendentes");
+            lbTitulo.setPadding(new Insets(0,480, 0,3));
+
+            lbMsgFimDePagina.setText("Não há mais anuncios pendentes a mostrar...");
         });
 
         btnENG.setOnAction((e)->{
             btnENG.setStyle("-fx-background-color: #0004F5");
             btnPT.setStyle("-fx-background-color: #FFFFFF;");
+
+            lbNomeApp.setPadding(new Insets(0, 813, 0 ,3));
+            btnSair.setText("Exit");
+
+            lbTitulo.setText("List of Pending Rooms");
+            lbTitulo.setPadding(new Insets(0,560, 0,3));
+
+            lbMsgFimDePagina.setText("There are no more pending ads to show...");
         });
     }
 }
