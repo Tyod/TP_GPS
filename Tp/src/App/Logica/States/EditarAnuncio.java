@@ -18,6 +18,10 @@ public class EditarAnuncio  extends AppStateAdapter{
         return new EscolheVista(dados);
     }
 
+    public void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto){ dados.atualizaEdicaoListaQuartosPublicos(tempQuarto); }
+    public void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto){ dados.atualizaEdicaoListaQuartosFavoritos(tempQuarto); }
+    public void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto) { dados.atualizaEdicaoListaQuartosPendentes(tempQuarto); }
+
     public Quarto getTempQuarto(){ return dados.getTempQuarto(); }
 
     public void setTempQuarto(int id){

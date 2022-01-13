@@ -31,4 +31,7 @@ public abstract class AppStateAdapter  implements IAppState{
     public void adicionaQuartoFavorito(int id){}
     public Quarto getTempQuarto(){ return null;}
     public void setTempQuarto(int id){}
+    public void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto){  }
+    public void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto){  }
+    public void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto){  }
 }

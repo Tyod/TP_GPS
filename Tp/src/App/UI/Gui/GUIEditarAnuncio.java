@@ -3,6 +3,7 @@ package App.UI.Gui;
 import App.Logica.AppObs;
 import App.Logica.AppSituation;
 import App.Logica.Data.DisponibilidadeQuarto;
+import App.Logica.Data.Quarto;
 import App.Logica.PropsID;
 import App.UI.Resources.CSSManager;
 import javafx.geometry.Insets;
@@ -306,6 +307,10 @@ public class GUIEditarAnuncio extends BorderPane {
                 appObs.getTempQuarto().setDespesas(despesas);
                 appObs.getTempQuarto().setLocalizacao(tfLocalizacao.getText());
                 appObs.getTempQuarto().setContacto(Integer.parseInt(tfContactos.getText()));
+
+                appObs.atualizaEdicaoListaQuartosPublicos(appObs.getTempQuarto());
+                appObs.atualizaEdicaoListaQuartosFavoritos(appObs.getTempQuarto());
+                appObs.atualizaEdicaoListaQuartosPendentes(appObs.getTempQuarto());
 
                 appObs.geraVistaListaQuartosPessoal();
             }else {

@@ -38,4 +38,8 @@ public interface IAppState {
 
     Quarto getTempQuarto();
     void setTempQuarto(int id);
+
+    void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto);
+    void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto);
+    void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto);
 }

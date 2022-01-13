@@ -87,5 +87,15 @@ public class AppObs {
     }
 
 
+    public void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto) {
+        app.atualizaEdicaoListaQuartosPublicos(tempQuarto);
+    }
 
+    public void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto) {
+        app.atualizaEdicaoListaQuartosFavoritos(tempQuarto);
+    }
+
+    public void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto) {
+        app.atualizaEdicaoListaQuartosPendentes(tempQuarto);
+    }
 }

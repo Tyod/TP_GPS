@@ -311,4 +311,55 @@ public class AppData {
             return false;
         }
     }
+
+    public void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto) {
+        for(Quarto temp : listaQuartoPublicados){
+            if(temp.getId() == tempQuarto.getId()){
+                temp.setDisponiblidade(tempQuarto.getDisponiblidade());
+                temp.setPreco(tempQuarto.getPreco());
+                temp.setLocalizacao(tempQuarto.getLocalizacao());
+                temp.setServicos(tempQuarto.getServicos());
+                temp.setDespesas(tempQuarto.getDespesas());
+                temp.setContacto(tempQuarto.getContacto());
+                temp.setImagem(tempQuarto.getImagem());
+                temp.setAprovacao(tempQuarto.getAprovacao());
+                temp.setPublicado(tempQuarto.getPublicado());
+                temp.setFavorito(tempQuarto.getFavorito());
+            }
+        }
+    }
+
+    public void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto) {
+        for(Quarto temp : listaFavoritos){
+            if(temp.getId() == tempQuarto.getId()){
+                temp.setDisponiblidade(tempQuarto.getDisponiblidade());
+                temp.setPreco(tempQuarto.getPreco());
+                temp.setLocalizacao(tempQuarto.getLocalizacao());
+                temp.setServicos(tempQuarto.getServicos());
+                temp.setDespesas(tempQuarto.getDespesas());
+                temp.setContacto(tempQuarto.getContacto());
+                temp.setImagem(tempQuarto.getImagem());
+                temp.setAprovacao(tempQuarto.getAprovacao());
+                temp.setPublicado(tempQuarto.getPublicado());
+                temp.setFavorito(tempQuarto.getFavorito());
+            }
+        }
+    }
+
+    public void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto){
+        for(Quarto temp : listaQuartosPendentes){
+            if (temp.getId() == tempQuarto.getId()){
+                temp.setDisponiblidade(tempQuarto.getDisponiblidade());
+                temp.setPreco(tempQuarto.getPreco());
+                temp.setLocalizacao(tempQuarto.getLocalizacao());
+                temp.setServicos(tempQuarto.getServicos());
+                temp.setDespesas(tempQuarto.getDespesas());
+                temp.setContacto(tempQuarto.getContacto());
+                temp.setImagem(tempQuarto.getImagem());
+                temp.setAprovacao(tempQuarto.getAprovacao());
+                temp.setPublicado(tempQuarto.getPublicado());
+                temp.setFavorito(tempQuarto.getFavorito());
+            }
+        }
+    }
 }

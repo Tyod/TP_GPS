@@ -128,4 +128,18 @@ public class App {
     public Quarto getTempQuarto() {
         return estado.getTempQuarto();
     }
+
+
+    //Atualiza Listas Após Edição
+    public void atualizaEdicaoListaQuartosPublicos(Quarto tempQuarto) {
+        estado.atualizaEdicaoListaQuartosPublicos(tempQuarto);
+    }
+
+    public void atualizaEdicaoListaQuartosFavoritos(Quarto tempQuarto) {
+        estado.atualizaEdicaoListaQuartosFavoritos(tempQuarto);
+    }
+
+    public void atualizaEdicaoListaQuartosPendentes(Quarto tempQuarto) {
+        estado.atualizaEdicaoListaQuartosPendentes(tempQuarto);
+    }
 }

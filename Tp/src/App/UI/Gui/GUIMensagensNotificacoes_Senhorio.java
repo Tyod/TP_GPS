@@ -8,10 +8,7 @@ import App.Logica.PropsID;
 import App.UI.Resources.CSSManager;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -44,6 +41,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
     HBox painelDeMensagens;
     TextField tfInputMensagem;
     Button btnEnviaMsg;
+    Button btnInfo;
 
     //Painel Principal
     VBox painel;
@@ -100,6 +98,8 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         }
 
         painel.getChildren().addAll(cabecalho,subCabecalho,zonaMsg,painelDeMensagens);
+
+        tfInputMensagem.setText("Escreva aqui...");
     }
 
     private void criarComponentes() {
@@ -119,6 +119,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         painelDeMensagens = new HBox();
         tfInputMensagem = new TextField("Escreva aqui...");
         btnEnviaMsg = new Button("✉");
+        btnInfo= new Button("❓");
 
         lbTitulo.setId("labelSubTitulo");
         lbNomeApp.setId("labelNomeApp");
@@ -165,7 +166,10 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
         //Painel de Escrita
         tfInputMensagem.setMinWidth(820);
         painelDeMensagens.setSpacing(10);
-        painelDeMensagens.getChildren().addAll(tfInputMensagem, btnEnviaMsg);
+        btnInfo.setPadding(new Insets(4.0,4.0,4.0,4.0));
+        btnInfo.setTooltip(new Tooltip("Maximo: 70 caracteres"));
+        btnEnviaMsg.setPadding(new Insets(4.0,8.0,4.0,8.0));
+        painelDeMensagens.getChildren().addAll(tfInputMensagem, btnEnviaMsg, btnInfo);
         painelDeMensagens.setAlignment(Pos.CENTER);
         painel.setPadding(new Insets(0,0,20,0));
 
@@ -198,6 +202,7 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
             lbTitulo.setText("Mensagens Senhorio");
             lbTitulo.setPadding(new Insets(0,600, 0,3));
             tfInputMensagem.setText("Escreva Aqui...");
+            btnInfo.setTooltip(new Tooltip("Maximo: 70 caracteres"));
         });
 
         btnENG.setOnAction((e)->{
@@ -212,19 +217,22 @@ public class GUIMensagensNotificacoes_Senhorio extends BorderPane {
             lbTitulo.setText("House Owner messages");
             lbTitulo.setPadding(new Insets(0,550, 0,3));
             tfInputMensagem.setText("Write here...");
+            btnInfo.setTooltip(new Tooltip("Max: 70 characters"));
         });
 
         btnEnviaMsg.setOnAction((e)->{
-            ImageView imageView2;
-            imageView2 = new ImageView("App/UI/Resources/Images/AvatarSenhorio.jpg");
-            imageView2.setFitWidth(30);
-            imageView2.setFitHeight(30);
-            Label mensagem = new Label(tfInputMensagem.getText());
-            mensagem.setStyle("-fx-font: 12 arial;");
-            zonaMsg.add(imageView2, 2, ContadorLinha);
-            zonaMsg.add(mensagem, 1, ContadorLinha);
-            appObs.adicionaMensagem(TipoUtilzadores.Senhorio, tfInputMensagem.getText());
-            ContadorLinha++;
+            if(tfInputMensagem.getText().length() <= 70){
+                ImageView imageView2;
+                imageView2 = new ImageView("App/UI/Resources/Images/AvatarSenhorio.jpg");
+                imageView2.setFitWidth(30);
+                imageView2.setFitHeight(30);
+                Label mensagem = new Label(tfInputMensagem.getText());
+                mensagem.setStyle("-fx-font: 12 arial;");
+                zonaMsg.add(imageView2, 2, ContadorLinha);
+                zonaMsg.add(mensagem, 1, ContadorLinha);
+                appObs.adicionaMensagem(TipoUtilzadores.Senhorio, tfInputMensagem.getText());
+                ContadorLinha++;
+            }
         });
     }
 }
