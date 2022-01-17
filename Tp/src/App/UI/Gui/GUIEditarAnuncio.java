@@ -284,6 +284,8 @@ public class GUIEditarAnuncio extends BorderPane {
 
         btnGuardar.setOnAction((e)->{
             if(validaCampos()){
+                appObs.getTempQuarto().setImagem(imageView.getImage().getUrl());
+
                 appObs.getTempQuarto().setDisponiblidade((DisponibilidadeQuarto) cbEstado.getValue());
                 appObs.getTempQuarto().setPreco(Integer.parseInt(tfPreco.getText()));
 
